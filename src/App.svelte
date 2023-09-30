@@ -8,7 +8,7 @@
 <div id="app">
     <Input />
     <Canvas>
-        {#each { length: $input_store.slider1 } as _, i}
+        {#each { length: $input_store.nPoints } as _, i}
             <RandomDot />
         {/each}
         <RandomDot />
