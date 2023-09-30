@@ -11,6 +11,5 @@
         {#each { length: $input_store.nPoints } as _, i}
             <RandomDot />
         {/each}
-        <RandomDot />
     </Canvas>
 </div>

@@ -4,7 +4,7 @@
 </script>
 
 <div class="container">
-    <Slider text="Number of Points" bind:value={$input_store.nPoints} />
+    <Slider text="Number of Points" bind:value={$input_store.nPoints} min={3} />
 </div>
 
 <style>
