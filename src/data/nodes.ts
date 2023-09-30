@@ -10,9 +10,9 @@ export class Nodes {
         this.nodes.set(this.nextIdx, [x, y]);
         this.nextIdx++;
     }
-    setCoords(idx: pointIdx, coods: pointCoords): void {
+    setCoords(idx: pointIdx, coords: pointCoords): void {
         if (!this.nodes.has(idx)) throw new Error(`node ${idx} not found`);
-        this.nodes.set(idx, coods);
+        this.nodes.set(idx, coords);
     }
     get(idx: pointIdx): pointCoords {
         let val = this.nodes.get(idx);

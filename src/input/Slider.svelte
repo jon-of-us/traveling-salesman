@@ -4,10 +4,10 @@
     export let min = 0;
     export let max = 100;
     export let step = 1;
-    export let initalValue = Infinity;
+    export let initialValue = Infinity;
     export let value: number;
-    if (initalValue != Infinity) {
-        value = initalValue;
+    if (initialValue != Infinity) {
+        value = initialValue;
     }
     let color = ts.fontColor;
     /**
