@@ -15,7 +15,6 @@ describe("Edges", () => {
         edges.add([1, 2]);
 
         assert.equal(edges.count(), 1);
-        console.log(edges.all());
         assert.isTrue(edges.has([1, 2]));
     });
 
@@ -28,63 +27,64 @@ describe("Edges", () => {
     // Add more test cases as needed
 });
 
-// describe("neighborMap", () => {
-//     it("should create a valid neighbor map", () => {
-//         const edges = new Edges();
-//         edges.add([1, 2]);
-//         edges.add([2, 3]);
+describe("neighborMap", () => {
+    it("should create a valid neighbor map", () => {
+        const edges = new Edges();
+        edges.add([1, 2]);
+        edges.add([2, 3]);
 
-//         const map = neighborMap(edges);
+        const map = neighborMap(edges);
+        console.log(map);
 
-//         assert.isTrue(map.has(1));
-//         assert.isTrue(map.has(2));
-//         assert.isTrue(map.has(3));
+        assert.isTrue(map.has(1));
+        assert.isTrue(map.has(2));
+        assert.isTrue(map.has(3));
 
-//         assert.equal(map.get(1)!.size, 1);
-//         assert.equal(map.get(2)!.size, 2);
-//         assert.equal(map.get(3)!.size, 1);
+        assert.equal(map.get(1)!.size, 1);
+        assert.equal(map.get(2)!.size, 2);
+        assert.equal(map.get(3)!.size, 1);
 
-//         // Add more assertions as needed
-//     });
+        // Add more assertions as needed
+    });
 
-//     // Add more test cases as needed
-// });
+    // Add more test cases as needed
+});
 
-// describe("neighbors", () => {
-//     it("should return correct neighbors", () => {
-//         const edges = new Edges();
-//         edges.add([1, 2]);
-//         edges.add([2, 3]);
+describe("neighbors", () => {
+    it("should return correct neighbors", () => {
+        const edges = new Edges();
+        edges.add([1, 2]);
+        edges.add([2, 3]);
 
-//         const result = neighbors(edges, 2);
+        const result = neighbors(edges, 2);
 
-//         assert.equal(result.size, 2);
-//         assert.isTrue(result.has(1));
-//         assert.isTrue(result.has(3));
+        assert.equal(result.size, 2);
+        assert.isTrue(result.has(1));
+        assert.isTrue(result.has(3));
 
-//         // Add more assertions as needed
-//     });
+        // Add more assertions as needed
+    });
 
-//     // Add more test cases as needed
-// });
+    // Add more test cases as needed
+});
 
-// describe("isClosedLoop", () => {
-//     it("should return true for a closed loop", () => {
-//         const edges = new Edges();
-//         edges.add([1, 2]);
-//         edges.add([2, 3]);
-//         edges.add([3, 1]);
+describe("isClosedLoop", () => {
+    it("should return true for a closed loop", () => {
+        const edges = new Edges();
+        edges.add([1, 2]);
+        edges.add([2, 3]);
+        edges.add([3, 1]);
 
-//         assert.isTrue(isClosedLoop(edges));
-//     });
+        assert.isTrue(isClosedLoop(edges));
+    });
 
-//     it("should return false for an open loop", () => {
-//         const edges = new Edges();
-//         edges.add([1, 2]);
-//         edges.add([2, 3]);
+    it("should return false for an open loop", () => {
+        const edges = new Edges();
+        edges.add([1, 2]);
+        edges.add([2, 3]);
 
-//         assert.isFalse(isClosedLoop(edges));
-//     });
+        assert.isFalse(isClosedLoop(edges));
+    });
 
-//     // Add more test cases as needed
-// });
+    // Add more test cases as needed
+});

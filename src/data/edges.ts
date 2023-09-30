@@ -3,22 +3,33 @@ import type { pointIdx } from "./nodes";
 type nodePair = [pointIdx, pointIdx];
 
 export class Edges {
-    edges = new Set<nodePair>();
-    add(pair: nodePair): void {
-        if (pair[0] === pair[1]) throw new Error("self loop not allowed");
-        this.edges.add(pair.sort());
+    edges = new Set<number>();
+    private associateNumber(pair: nodePair) {
+        let p = [...pair].sort().reverse();
+        return (p[0] * (p[0] + 1)) / 2 + p[1];
     }
-    delete(pair: nodePair): boolean {
-        return this.edges.delete(pair.sort());
+    private disassociateNumber(num: number): nodePair {
+        let a = Math.floor((Math.sqrt(8 * num + 1) - 1) / 2);
+        let b = num - (a * (a + 1)) / 2;
+        return [a, b];
     }
-    has(pair: nodePair): boolean {
-        return this.edges.has(pair.sort());
+    add(p: nodePair): void {
+        if (p[0] === p[1]) throw new Error("self loop not allowed");
+        this.edges.add(this.associateNumber(p));
+    }
+    delete(p: nodePair): boolean {
+        return this.edges.delete(this.associateNumber(p));
+    }
+    has(p: nodePair): boolean {
+        return this.edges.has(this.associateNumber(p));
     }
     count(): number {
         return this.edges.size;
     }
-    all(): IterableIterator<nodePair> {
-        return this.edges.values();
+    *all(): IterableIterator<nodePair> {
+        for (let num of this.edges) {
+            yield this.disassociateNumber(num);
+        }
     }
     clear(): void {
         this.edges.clear();
@@ -45,14 +56,18 @@ export function isClosedLoop(edges: Edges): boolean {
     let map = neighborMap(edges);
 
     let start = map.keys().next().value;
+    let last = -1;
     let next = start;
     let nVisited = 0;
     do {
         let neighbors = [...map.get(next)!.values()];
+        console.log(neighbors);
         if (neighbors.length !== 2) return false;
-        neighbors = neighbors.filter((n) => n !== start);
+        neighbors = neighbors.filter((n) => n !== last);
+        console.log(neighbors);
+        last = next;
         next = neighbors[0];
         nVisited++;
-    } while (next !== start);
+    } while (next !== start && nVisited <= edges.count() + 1);
     return nVisited === edges.count();
 }
