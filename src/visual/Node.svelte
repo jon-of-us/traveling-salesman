@@ -1,12 +1,15 @@
 <script lang="ts">
     import { Layer, type Render } from "svelte-canvas";
+    import * as s from "./Node.settings";
+    import { type pointCoords } from "../data/nodes";
 
-    let x = 0.5 + 0.6 * (Math.random() - 0.5);
-    let y = 0.5 + 0.6 * (Math.random() - 0.5);
+    export let coords: pointCoords;
+    $: [x, y] = coords;
+
     const render: Render = ({ context, width, height }) => {
         context.fillStyle = "white";
         context.beginPath();
-        context.arc(x * width, y * height, 7, 0, 2 * Math.PI);
+        context.arc(x * width, y * height, s.radius, 0, 2 * Math.PI);
         context.fill();
     };
 </script>

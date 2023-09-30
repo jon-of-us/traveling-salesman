@@ -1,4 +1,5 @@
-type pointCoords = [x: number, y: number];
+/** between 0 and 1 */
+export type pointCoords = [x: number, y: number];
 export type pointIdx = number;
 
 /** every node is identified by a unique index */
@@ -29,5 +30,11 @@ export class Nodes {
     }
     all(): IterableIterator<pointIdx> {
         return this.nodes.keys();
+    }
+}
+
+export function addRandomNodes(nodes: Nodes, number = 1): void {
+    for (let i = 0; i < number; i++) {
+        nodes.add(Math.random(), Math.random());
     }
 }
