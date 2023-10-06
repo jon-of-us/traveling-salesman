@@ -34,7 +34,6 @@ describe("neighborMap", () => {
         edges.add([2, 3]);
 
         const map = neighborMap(edges);
-        console.log(map);
 
         assert.isTrue(map.has(1));
         assert.isTrue(map.has(2));
