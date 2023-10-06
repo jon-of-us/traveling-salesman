@@ -32,9 +32,3 @@ export class Nodes {
         return this.nodes.keys();
     }
 }
-
-export function addRandomNodes(nodes: Nodes, number = 1): void {
-    for (let i = 0; i < number; i++) {
-        nodes.add(Math.random(), Math.random());
-    }
-}

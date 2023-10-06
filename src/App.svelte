@@ -3,10 +3,14 @@
     import { input_store } from "./input/input_store";
     import Canvas from "./canvas/Canvas.svelte";
     import Node from "./visual/Node.svelte";
-    import { Nodes, addRandomNodes } from "./data/nodes";
+    import { Nodes } from "./data/nodes";
+    import { adjustNumberOfNodes } from "./data/node_utils";
 
     let nodes = new Nodes();
-    addRandomNodes(nodes, $input_store.nPoints);
+    $: {
+        adjustNumberOfNodes(nodes, $input_store.nPoints);
+        nodes = nodes;
+    }
 </script>
 
 <div id="app">

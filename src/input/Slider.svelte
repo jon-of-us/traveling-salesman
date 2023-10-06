@@ -6,9 +6,6 @@
     export let step = 1;
     export let initialValue = Infinity;
     export let value: number;
-    if (initialValue != Infinity) {
-        value = initialValue;
-    }
     let color = ts.fontColor;
     /**
      * either string or function that returns string and takes the slider value as input
