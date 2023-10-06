@@ -1,8 +1,15 @@
 import { random, other, type algorithm } from "./algos";
 
-export const algoFunction = {
-    random: random,
-    other: other,
-} as const;
+export enum algoLabels {
+    "random",
+    "other",
+}
 
-export type algoOptions = keyof typeof algoFunction;
+export function algoFunction(algoLabel: algoLabels): algorithm {
+    switch (algoLabel) {
+        case algoLabels.random:
+            return random;
+        case algoLabels.other:
+            return other;
+    }
+}
