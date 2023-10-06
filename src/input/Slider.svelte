@@ -1,11 +1,14 @@
 <script lang="ts">
-    import * as ts from "../settings/global";
+    import * as ts from "../global_settings";
 
     export let min = 0;
     export let max = 100;
     export let step = 1;
     export let initialValue = Infinity;
     export let value: number;
+    if (initialValue != Infinity) {
+        value = initialValue;
+    }
     let color = ts.fontColor;
     /**
      * either string or function that returns string and takes the slider value as input

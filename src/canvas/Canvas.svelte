@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Canvas } from "svelte-canvas";
-    import * as ts from "../settings/global";
 
     export let width = 0;
     export let height = 0;

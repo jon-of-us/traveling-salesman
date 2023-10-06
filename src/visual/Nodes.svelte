@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Layer, type Render } from "svelte-canvas";
-    import * as s from "./Node.settings";
+    import * as s from "./visual_settings";
     import { type pointCoords } from "../data/nodes";
 
     export let coords: pointCoords;
