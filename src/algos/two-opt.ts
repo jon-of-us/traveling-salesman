@@ -13,7 +13,7 @@ export function* twoOpt(nodes: Nodes, edges: Edges) {
 /**return if anything changed */
 function twoOptStep(nodes: Nodes, edges: Edges): boolean {
     let edgeList = [...edges.all()];
-    while (edgeList.length >= 2) {
+    while (edgeList.length >= 4) {
         let edge1 = edgeList.pop()!;
         for (let edge2 of edgeList) {
             let [crossing, newEdge1, newEdge2] = edgesAreCrossing(
@@ -60,6 +60,8 @@ export function edgesAreCrossing(
     const lengSum = length(edge1, nodes) + length(edge2, nodes);
     const [p1, p2] = edge1;
     const [p3, p4] = edge2;
+    if (p1 == p3 || p1 == p4 || p2 == p3 || p2 == p4)
+        return [false, edge1, edge2];
     if (testSwap([p1, p3], [p2, p4])) return [true, [p1, p3], [p2, p4]];
     if (testSwap([p1, p4], [p2, p3])) return [true, [p1, p4], [p2, p3]];
     return [false, edge1, edge2];

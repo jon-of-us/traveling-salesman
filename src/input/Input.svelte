@@ -1,10 +1,16 @@
 <script lang="ts">
     import Slider from "./Slider.svelte";
     import { input_store } from "./input_store";
+    import * as is from "./input_settings";
 </script>
 
 <div class="container">
-    <Slider text="Number of Points" bind:value={$input_store.nPoints} min={3} />
+    <Slider
+        text="Number of Points"
+        bind:value={$input_store.nPoints}
+        min={3}
+        max={is.maxPoints}
+    />
 </div>
 
 <style>

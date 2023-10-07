@@ -61,10 +61,8 @@ export function isClosedLoop(edges: Edges): boolean {
     let nVisited = 0;
     do {
         let neighbors = [...map.get(next)!.values()];
-        console.log(neighbors);
         if (neighbors.length !== 2) return false;
         neighbors = neighbors.filter((n) => n !== last);
-        console.log(neighbors);
         last = next;
         next = neighbors[0];
         nVisited++;

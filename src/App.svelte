@@ -7,13 +7,14 @@
     import { Nodes } from "./data/nodes";
     import { adjustNumberOfNodes } from "./data/data_utils";
     import { Edges } from "./data/edges";
-    import { runAll } from "./algos/algo_utils";
+    import { run, runAll } from "./algos/algo_utils";
 
     let nodes = new Nodes();
     let edges = new Edges();
     $: {
         adjustNumberOfNodes(nodes, $input_store.nPoints);
         runAll(nodes, edges, $input_store.starterAlgo);
+        runAll(nodes, edges, $input_store.optimizerAlgo);
         nodes = nodes;
         edges = edges;
     }
