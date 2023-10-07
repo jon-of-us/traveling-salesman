@@ -23,10 +23,10 @@ function twoOptStep(nodes: Nodes, edges: Edges): boolean {
                 edges
             );
             if (crossing) {
-                edgeList.splice(edgeList.indexOf(edge1), 1);
-                edgeList.splice(edgeList.indexOf(edge2), 1);
-                edgeList.push(newEdge1);
-                edgeList.push(newEdge2);
+                edges.delete(edge1);
+                edges.delete(edge2);
+                edges.add(newEdge1);
+                edges.add(newEdge2);
                 return true;
             }
         }
@@ -42,18 +42,18 @@ export function edgesAreCrossing(
     edges: Edges
 ): [boolean, nodePair, nodePair] {
     function testSwap(newEdge1: nodePair, newEdge2: nodePair): boolean {
-        if (length([p1, p3], nodes) + length([p2, p4], nodes) >= lengSum) {
+        if (length(newEdge1, nodes) + length(newEdge2, nodes) >= lengSum) {
             return false;
         }
-        let newEdgeList = [...edges.all()];
-        newEdgeList.splice(newEdgeList.indexOf(edge1), 1);
-        newEdgeList.splice(newEdgeList.indexOf(edge2), 1);
-        newEdgeList.push(newEdge1);
-        newEdgeList.push(newEdge2);
+
         let newEdges = new Edges();
-        for (let edge of newEdgeList) {
+        for (let edge of edges.all()) {
             newEdges.add(edge);
         }
+        newEdges.delete(edge1);
+        newEdges.delete(edge2);
+        newEdges.add(newEdge1);
+        newEdges.add(newEdge2);
         return isClosedLoop(newEdges);
     }
 
