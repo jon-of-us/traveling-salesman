@@ -2,18 +2,20 @@
     import Input from "./input/Input.svelte";
     import { input_store } from "./input/input_store";
     import Canvas from "./canvas/Canvas.svelte";
-    import Node from "./visual/Nodes.svelte";
+    import Node from "./visual/Node.svelte";
+    import Edge from "./visual/Edge.svelte";
     import { Nodes } from "./data/nodes";
     import { adjustNumberOfNodes } from "./data/node_utils";
     import { Edges } from "./data/edges";
-    import { run } from "./algos/algos";
+    import { runAll } from "./algos/algos";
 
     let nodes = new Nodes();
     let edges = new Edges();
-    run(nodes, edges, $input_store.starterAlgo);
     $: {
         adjustNumberOfNodes(nodes, $input_store.nPoints);
+        runAll(nodes, edges, $input_store.starterAlgo);
         nodes = nodes;
+        edges = edges;
     }
 </script>
 
@@ -22,6 +24,9 @@
     <Canvas>
         {#each nodes.all() as point}
             <Node coords={nodes.get(point)} />
+        {/each}
+        {#each edges.all() as edge}
+            <Edge coords={[nodes.get(edge[0]), nodes.get(edge[1])]} />
         {/each}
     </Canvas>
 </div>

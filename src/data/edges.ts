@@ -5,7 +5,7 @@ type nodePair = [pointIdx, pointIdx];
 export class Edges {
     edges = new Set<number>();
     private associateNumber(pair: nodePair) {
-        let p = [...pair].sort().reverse();
+        let p = [...pair].sort((a, b) => a - b).reverse();
         return (p[0] * (p[0] + 1)) / 2 + p[1];
     }
     private disassociateNumber(num: number): nodePair {

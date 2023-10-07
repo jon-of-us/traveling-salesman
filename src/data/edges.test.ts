@@ -13,9 +13,21 @@ describe("Edges", () => {
     it("should add edges correctly", () => {
         const edges = new Edges();
         edges.add([1, 2]);
+        edges.add([2, 3]);
+        edges.add([3, 1]);
+        edges.add([4, 5]);
+        edges.add([5, 6]);
+        edges.add([6, 4]);
+        edges.delete([6, 4]);
+        edges.delete([5, 6]);
 
-        assert.equal(edges.count(), 1);
+        assert.equal(edges.count(), 4);
         assert.isTrue(edges.has([1, 2]));
+        assert.isTrue(edges.has([2, 3]));
+        assert.isTrue(edges.has([3, 1]));
+        assert.isTrue(edges.has([4, 5]));
+        assert.isFalse(edges.has([5, 6]));
+        assert.isFalse(edges.has([6, 4]));
     });
 
     it("should not allow self-loops", () => {

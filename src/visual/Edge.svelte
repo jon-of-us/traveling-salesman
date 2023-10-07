@@ -9,8 +9,8 @@
 
     const render: Render = ({ context, width, height }) => {
         context.beginPath();
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
+        context.moveTo(x1 * width, y1 * height);
+        context.lineTo(x2 * width, y2 * height);
         context.strokeStyle = gs.fontColor;
         context.lineWidth = vs.lineWidth;
         context.stroke();

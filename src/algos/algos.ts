@@ -15,8 +15,16 @@ function hash(n: number) {
 export function* random(nodes: Nodes, edges: Edges) {
     let allNodesRandom = [...nodes.all()].sort((a, b) => hash(a) - hash(b));
     edges.clear();
-    for (let i = 0; i < allNodesRandom.length - 1; i++) {
-        edges.add([allNodesRandom[i], allNodesRandom[i + 1]]);
+    let e = [];
+    for (let i = 0; i < allNodesRandom.length; i++) {
+        e.push([
+            allNodesRandom[i],
+            allNodesRandom[(i + 1) % allNodesRandom.length],
+        ]);
+        edges.add([
+            allNodesRandom[i],
+            allNodesRandom[(i + 1) % allNodesRandom.length],
+        ]);
         yield;
     }
 }
@@ -31,5 +39,6 @@ export function run(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
 }
 export function runAll(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
     const algoFunc = algoFunction(algoLabel);
-    for (let _ in algoFunc(nodes, edges));
+    for (let _ of algoFunc(nodes, edges)) {
+    }
 }
