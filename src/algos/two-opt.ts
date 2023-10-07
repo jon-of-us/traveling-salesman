@@ -4,6 +4,8 @@ import { type nodePair } from "../data/edges";
 import { length } from "../data/data_utils";
 import { isClosedLoop } from "../data/edges";
 
+// no good implementation!!! not efficient
+
 export function* twoOpt(nodes: Nodes, edges: Edges) {
     while (twoOptStep(nodes, edges)) {
         yield;
