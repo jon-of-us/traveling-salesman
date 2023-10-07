@@ -7,7 +7,7 @@
     import { Nodes } from "./data/nodes";
     import { adjustNumberOfNodes } from "./data/data_utils";
     import { Edges } from "./data/edges";
-    import { runAll } from "./algos/algos";
+    import { runAll } from "./algos/algo_utils";
 
     let nodes = new Nodes();
     let edges = new Edges();
