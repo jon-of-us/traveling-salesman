@@ -1,6 +1,6 @@
 import type { pointIdx } from "./nodes";
 
-type nodePair = [pointIdx, pointIdx];
+export type nodePair = [pointIdx, pointIdx];
 
 export class Edges {
     edges = new Set<number>();

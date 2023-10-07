@@ -28,11 +28,7 @@ export function* random(nodes: Nodes, edges: Edges) {
         yield;
     }
 }
-export function* other(nodes: Nodes, edges: Edges) {
-    for (let i = 0; i < 100; i++) {
-        yield;
-    }
-}
+export function* twoOpt(nodes: Nodes, edges: Edges) {}
 export function run(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
     const algoFunc = algoFunction(algoLabel);
     return algoFunc(nodes, edges);

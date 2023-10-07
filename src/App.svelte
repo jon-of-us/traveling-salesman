@@ -5,7 +5,7 @@
     import Node from "./visual/Node.svelte";
     import Edge from "./visual/Edge.svelte";
     import { Nodes } from "./data/nodes";
-    import { adjustNumberOfNodes } from "./data/node_utils";
+    import { adjustNumberOfNodes } from "./data/data_utils";
     import { Edges } from "./data/edges";
     import { runAll } from "./algos/algos";
 

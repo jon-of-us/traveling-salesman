@@ -1,15 +1,15 @@
-import { random, other, type algorithm } from "./algos";
+import { random, twoOpt, type algorithm } from "./algos";
 
 export enum algoLabels {
     "random",
-    "other",
+    "two-opt",
 }
 
 export function algoFunction(algoLabel: algoLabels): algorithm {
     switch (algoLabel) {
         case algoLabels.random:
             return random;
-        case algoLabels.other:
-            return other;
+        case algoLabels["two-opt"]:
+            return twoOpt;
     }
 }
