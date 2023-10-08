@@ -1,4 +1,5 @@
 import type { pointIdx } from "./nodes";
+import { Nodes } from "./nodes";
 
 export type nodePair = [pointIdx, pointIdx];
 
@@ -47,9 +48,12 @@ export function neighborMap(edges: Edges): Map<pointIdx, Set<pointIdx>> {
     return map;
 }
 export function neighbors(edges: Edges, idx: pointIdx): Set<pointIdx> {
-    let map = neighborMap(edges);
-    if (!map.has(idx)) return new Set();
-    return map.get(idx)!;
+    let neighbors = new Set<pointIdx>();
+    for (let [a, b] of edges.all()) {
+        if (a === idx) neighbors.add(b);
+        if (b === idx) neighbors.add(a);
+    }
+    return neighbors;
 }
 export function isClosedLoop(edges: Edges): boolean {
     if (edges.count() < 3) return false;

@@ -22,9 +22,9 @@ export function algoFunction(algoLabel: algoLabels): algorithm {
     }
 }
 
-export function run(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
+export function runStep(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
     const algoFunc = algoFunction(algoLabel);
-    return algoFunc(nodes, edges);
+    return algoFunc(nodes, edges).next().done;
 }
 export function runAll(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
     const algoFunc = algoFunction(algoLabel);
