@@ -2,10 +2,12 @@ import { random } from "./random";
 import { twoOpt } from "./two-opt";
 import { Nodes } from "../data/nodes";
 import { Edges } from "../data/edges";
+import { nextNeighbor } from "./next_neighbor";
 
 export enum algoLabels {
     "random",
     "twoOpt",
+    "nextNeighbor",
 }
 
 export type algorithm = (
@@ -19,6 +21,8 @@ export function algoFunction(algoLabel: algoLabels): algorithm {
             return random;
         case algoLabels.twoOpt:
             return twoOpt;
+        case algoLabels.nextNeighbor:
+            return nextNeighbor;
     }
 }
 

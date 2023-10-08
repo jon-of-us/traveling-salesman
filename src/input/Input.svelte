@@ -8,7 +8,7 @@
     <Slider
         text="Number of Points"
         bind:value={$input_store.nPoints}
-        min={3}
+        min={is.minPoints}
         max={is.maxPoints}
     />
 </div>

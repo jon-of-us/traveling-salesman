@@ -28,7 +28,7 @@ function optimizeConnection(
     edges.add(skippedConnection);
     // search best place to insert
     let minLeng = Infinity;
-    let bestEdgeToRemove;
+    let bestEdgeToRemove: nodePair;
     for (let edge of edges.all()) {
         const addedLeng =
             length([node, edge[0]], nodes) +
@@ -42,5 +42,5 @@ function optimizeConnection(
     edges.delete(bestEdgeToRemove!);
     edges.add([node, bestEdgeToRemove![0]]);
     edges.add([node, bestEdgeToRemove![1]]);
-    return bestEdgeToRemove != skippedConnection;
+    return edges.has(skippedConnection);
 }
