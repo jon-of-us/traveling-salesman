@@ -8,8 +8,19 @@ import { length } from "../data/data_utils";
  * chooses edge, so that the resulting path is shortest
  * */
 export function insertNodeCheap(node: pointIdx, nodes: Nodes, edges: Edges) {
+    const { bestEdgeToInsert } = findCheapestInsertion(node, nodes, edges);
+    edges.delete(bestEdgeToInsert);
+    edges.add([node, bestEdgeToInsert[0]]);
+    edges.add([node, bestEdgeToInsert[1]]);
+}
+
+export function findCheapestInsertion(
+    node: pointIdx,
+    nodes: Nodes,
+    edges: Edges
+): { bestEdgeToInsert: nodePair; minLeng: number } {
     let minLeng = Infinity;
-    let bestEdgeToRemove: nodePair;
+    let bestEdgeToInsert: nodePair;
     for (let edge of edges.all()) {
         const addedLeng =
             length([node, edge[0]], nodes) +
@@ -17,10 +28,9 @@ export function insertNodeCheap(node: pointIdx, nodes: Nodes, edges: Edges) {
             length(edge, nodes);
         if (addedLeng < minLeng) {
             minLeng = addedLeng;
-            bestEdgeToRemove = edge;
+            bestEdgeToInsert = edge;
         }
     }
-    edges.delete(bestEdgeToRemove!);
-    edges.add([node, bestEdgeToRemove![0]]);
-    edges.add([node, bestEdgeToRemove![1]]);
+    bestEdgeToInsert = bestEdgeToInsert!;
+    return { bestEdgeToInsert, minLeng };
 }

@@ -37,6 +37,15 @@ export class Edges {
     }
 }
 
+export function allUsedNodes(edges: Edges): Set<pointIdx> {
+    let allUsedNodes = new Set<pointIdx>();
+    for (let edge of edges.all()) {
+        allUsedNodes.add(edge[0]);
+        allUsedNodes.add(edge[1]);
+    }
+    return allUsedNodes;
+}
+
 export function neighborMap(edges: Edges): Map<pointIdx, Set<pointIdx>> {
     let map = new Map<pointIdx, Set<pointIdx>>();
     for (let [a, b] of edges.all()) {
