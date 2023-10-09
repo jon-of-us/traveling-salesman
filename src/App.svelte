@@ -14,9 +14,9 @@
     let edges = new Edges();
     $: {
         adjustNumberOfNodes(nodes, $input_store.nPoints);
-        runAll(nodes, edges, $input_store.starterAlgo);
-        runAll(nodes, edges, algoLabels.nextNeighbor);
-        runAll(nodes, edges, algoLabels.twoOpt);
+        runAll(nodes, edges, algoLabels.shortestEdge);
+        // runAll(nodes, edges, algoLabels.nextNeighbor);
+        // runAll(nodes, edges, algoLabels.twoOpt);
         nodes = nodes;
         edges = edges;
     }

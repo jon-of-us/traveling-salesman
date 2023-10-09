@@ -3,11 +3,15 @@ import { twoOpt } from "./two-opt";
 import { Nodes } from "../data/nodes";
 import { Edges } from "../data/edges";
 import { nextNeighbor } from "./next_neighbor";
+import { cheapestInsertion } from "./cheapest_insertion";
+import { shortestEdge } from "./greedy";
 
 export enum algoLabels {
     "random",
     "twoOpt",
     "nextNeighbor",
+    "cheapestInsertion",
+    "shortestEdge",
 }
 
 export type algorithm = (
@@ -23,6 +27,10 @@ export function algoFunction(algoLabel: algoLabels): algorithm {
             return twoOpt;
         case algoLabels.nextNeighbor:
             return nextNeighbor;
+        case algoLabels.cheapestInsertion:
+            return cheapestInsertion;
+        case algoLabels.shortestEdge:
+            return shortestEdge;
     }
 }
 
