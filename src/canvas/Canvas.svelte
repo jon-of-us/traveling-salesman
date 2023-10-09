@@ -3,13 +3,7 @@
 
     export let width = 0;
     export let height = 0;
-    let innerWidth: number;
-    let innerHeight: number;
-    $: width = innerWidth - 17;
-    $: height = innerHeight - 17;
 </script>
-
-<svelte:window bind:innerWidth bind:innerHeight />
 
 <div>
     <Canvas {width} {height}>

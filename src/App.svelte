@@ -10,21 +10,28 @@
     import { runAll, runStep } from "./algos/algo_utils";
     import { algoLabels } from "./algos/algo_utils";
 
+    let innerWidth: number;
+    let innerHeight: number;
+    $: width = innerWidth - 17;
+    $: height = innerHeight - 17;
+
     let nodes = new Nodes();
     let edges = new Edges();
     $: {
         adjustNumberOfNodes(nodes, $input_store.nPoints);
         runAll(nodes, edges, algoLabels.shortestEdge);
         // runAll(nodes, edges, algoLabels.nextNeighbor);
-        // runAll(nodes, edges, algoLabels.twoOpt);
+        runAll(nodes, edges, algoLabels.twoOpt);
         nodes = nodes;
         edges = edges;
     }
 </script>
 
+<svelte:window bind:innerWidth bind:innerHeight />
+
 <div id="app">
     <Input />
-    <Canvas>
+    <Canvas bind:width bind:height>
         {#each nodes.all() as point}
             <Node coords={nodes.get(point)} />
         {/each}
