@@ -1,10 +1,9 @@
 import { random } from "./random";
 import { twoOpt } from "./two-opt";
-import { Nodes } from "../data/nodes";
-import { Edges } from "../data/edges";
 import { nextNeighbor } from "./next_neighbor";
 import { cheapestInsertion } from "./cheapest_insertion";
 import { shortestEdge } from "./greedy";
+import type { Data } from "../data/data";
 
 export enum algoLabels {
     "random",
@@ -14,10 +13,7 @@ export enum algoLabels {
     "shortestEdge",
 }
 
-export type algorithm = (
-    nodes: Nodes,
-    edges: Edges
-) => Generator<undefined, void, unknown>;
+export type algorithm = (data: Data) => Generator<undefined, void, unknown>;
 
 export function algoFunction(algoLabel: algoLabels): algorithm {
     switch (algoLabel) {
@@ -34,12 +30,12 @@ export function algoFunction(algoLabel: algoLabels): algorithm {
     }
 }
 
-export function runStep(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
+export function runStep(data: Data, algoLabel: algoLabels) {
     const algoFunc = algoFunction(algoLabel);
-    return algoFunc(nodes, edges).next().done;
+    return algoFunc(data).next().done;
 }
-export function runAll(nodes: Nodes, edges: Edges, algoLabel: algoLabels) {
+export function runAll(data: Data, algoLabel: algoLabels) {
     const algoFunc = algoFunction(algoLabel);
-    for (let _ of algoFunc(nodes, edges)) {
+    for (let _ of algoFunc(data)) {
     }
 }

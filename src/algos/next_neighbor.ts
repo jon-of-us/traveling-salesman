@@ -1,14 +1,14 @@
-import { Nodes } from "../data/nodes";
-import { Edges, neighbors, type nodePair } from "../data/edges";
+import type { Data } from "../data/data";
+import { type nodePair } from "../data/edges";
 import { type pointIdx } from "../data/nodes";
 import { insertNodeCheap } from "./helper_algos";
 
 /**optimizer */
-export function* nextNeighbor(nodes: Nodes, edges: Edges) {
-    const nodeList = [...nodes.all()];
+export function* nextNeighbor(data: Data) {
+    const nodeList = [...data.nodes.all()];
     for (let i = 0; i < nodeList.length; i++) {
         const node = nodeList[i];
-        if (optimizeConnection(node, nodes, edges)) {
+        if (optimizeConnection(node, data)) {
             i = 0;
             yield;
         }
@@ -16,16 +16,12 @@ export function* nextNeighbor(nodes: Nodes, edges: Edges) {
 }
 
 /** return true if place of insertion changed */
-function optimizeConnection(
-    node: pointIdx,
-    nodes: Nodes,
-    edges: Edges
-): boolean {
-    const nodeNeigbors = [...neighbors(edges, node)];
-    edges.delete([node, nodeNeigbors[0]]);
-    edges.delete([node, nodeNeigbors[1]]);
+function optimizeConnection(node: pointIdx, data: Data): boolean {
+    const nodeNeigbors = [...data.neighbors(node)];
+    data.edges.delete([node, nodeNeigbors[0]]);
+    data.edges.delete([node, nodeNeigbors[1]]);
     const skippedConnection: nodePair = [nodeNeigbors[0], nodeNeigbors[1]];
-    edges.add(skippedConnection);
-    insertNodeCheap(node, nodes, edges);
-    return edges.has(skippedConnection);
+    data.edges.add(skippedConnection);
+    insertNodeCheap(node, data);
+    return data.edges.has(skippedConnection);
 }

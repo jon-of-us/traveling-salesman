@@ -1,7 +1,5 @@
-import { Nodes } from "../data/nodes";
-import { Edges } from "../data/edges";
+import type { Data } from "../data/data";
 import { type nodePair } from "../data/edges";
-import { length } from "../data/data_utils";
 
 class NodeInfo {
     timesUsed = 0;
@@ -29,15 +27,15 @@ class NodeInfo {
 }
 
 /** starter. Inserts shortest possible edge */
-export function* shortestEdge(nodes: Nodes, edges: Edges) {
-    edges.clear();
+export function* shortestEdge(data: Data) {
+    data.edges.clear();
     /**every possible edge*/
     let allEdgesAndLength: [nodePair, number][] = [];
-    let nodeList = [...nodes.all()];
+    let nodeList = [...data.nodes.all()];
     for (let i = 0; i < nodeList.length - 1; i++) {
         for (let j = i + 1; j < nodeList.length; j++) {
             let edge: nodePair = [nodeList[i], nodeList[j]];
-            allEdgesAndLength.push([edge, length(edge, nodes)]);
+            allEdgesAndLength.push([edge, data.length(edge)]);
         }
     }
     allEdgesAndLength.sort((a, b) => a[1] - b[1]);
@@ -45,7 +43,7 @@ export function* shortestEdge(nodes: Nodes, edges: Edges) {
         nodeList.map((node, idx) => [node, new NodeInfo(idx)])
     );
     for (let [edge, _] of allEdgesAndLength) {
-        if (edges.count() == nodes.count() - 1) {
+        if (data.edges.count() == data.nodes.count() - 1) {
             break;
         }
         let node0 = nodeInfo.get(edge[0])!;
@@ -57,7 +55,7 @@ export function* shortestEdge(nodes: Nodes, edges: Edges) {
         ) {
             continue;
         }
-        edges.add(edge);
+        data.edges.add(edge);
         node0.incrementTimesUsed();
         node1.incrementTimesUsed();
         node0.setPartition(node1);
@@ -66,6 +64,6 @@ export function* shortestEdge(nodes: Nodes, edges: Edges) {
     let remainingNodes = nodeList.filter(
         (node) => !nodeInfo.get(node)!.isUsedUp()
     );
-    edges.add(remainingNodes as nodePair);
+    data.edges.add(remainingNodes as nodePair);
     yield;
 }

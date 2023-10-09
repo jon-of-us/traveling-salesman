@@ -1,31 +1,30 @@
-import { Nodes, type pointIdx } from "../data/nodes";
-import { Edges, type nodePair } from "../data/edges";
-import { length } from "../data/data_utils";
+import { Data } from "../data/data";
+import { type nodePair } from "../data/edges";
+import { type pointIdx } from "../data/nodes";
 
 /**requirements:
  * - node is not connected
  * inserts node between one edge
  * chooses edge, so that the resulting path is shortest
  * */
-export function insertNodeCheap(node: pointIdx, nodes: Nodes, edges: Edges) {
-    const { bestEdgeToInsert } = findCheapestInsertion(node, nodes, edges);
-    edges.delete(bestEdgeToInsert);
-    edges.add([node, bestEdgeToInsert[0]]);
-    edges.add([node, bestEdgeToInsert[1]]);
+export function insertNodeCheap(node: pointIdx, data: Data) {
+    const { bestEdgeToInsert } = findCheapestInsertion(node, data);
+    data.edges.delete(bestEdgeToInsert);
+    data.edges.add([node, bestEdgeToInsert[0]]);
+    data.edges.add([node, bestEdgeToInsert[1]]);
 }
 
 export function findCheapestInsertion(
     node: pointIdx,
-    nodes: Nodes,
-    edges: Edges
+    data: Data
 ): { bestEdgeToInsert: nodePair; minLeng: number } {
     let minLeng = Infinity;
     let bestEdgeToInsert: nodePair;
-    for (let edge of edges.all()) {
+    for (let edge of data.edges.all()) {
         const addedLeng =
-            length([node, edge[0]], nodes) +
-            length([node, edge[1]], nodes) -
-            length(edge, nodes);
+            data.length([node, edge[0]]) +
+            data.length([node, edge[1]]) -
+            data.length(edge);
         if (addedLeng < minLeng) {
             minLeng = addedLeng;
             bestEdgeToInsert = edge;
