@@ -1,7 +1,7 @@
 import { Nodes } from "../data/nodes";
 import { Edges, neighbors, type nodePair } from "../data/edges";
-import { length } from "../data/data_utils";
 import { type pointIdx } from "../data/nodes";
+import { insertNodeCheap } from "./helper_algos";
 
 /**optimizer */
 export function* nextNeighbor(nodes: Nodes, edges: Edges) {
@@ -26,21 +26,6 @@ function optimizeConnection(
     edges.delete([node, nodeNeigbors[1]]);
     const skippedConnection: nodePair = [nodeNeigbors[0], nodeNeigbors[1]];
     edges.add(skippedConnection);
-    // search best place to insert
-    let minLeng = Infinity;
-    let bestEdgeToRemove: nodePair;
-    for (let edge of edges.all()) {
-        const addedLeng =
-            length([node, edge[0]], nodes) +
-            length([node, edge[1]], nodes) -
-            length(edge, nodes);
-        if (addedLeng < minLeng) {
-            minLeng = addedLeng;
-            bestEdgeToRemove = edge;
-        }
-    }
-    edges.delete(bestEdgeToRemove!);
-    edges.add([node, bestEdgeToRemove![0]]);
-    edges.add([node, bestEdgeToRemove![1]]);
+    insertNodeCheap(node, nodes, edges);
     return edges.has(skippedConnection);
 }
