@@ -6,13 +6,13 @@
 </script>
 
 <div class="container">
-    <div class="stackContainer">
+    <div class="stack">
         <AlgoStack
             bind:initAlgo={$input_store.initAlgo}
             bind:optimAlgoStack={$input_store.optimAlgoStack}
         />
     </div>
-    <div class="sliderContainer">
+    <div class="slider">
         <Slider
             text="Number of Points"
             bind:value={$input_store.nPoints}
@@ -24,18 +24,19 @@
 
 <style>
     .container {
-        position: absolute;
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-        width: 220px;
+        box-sizing: border-box;
+        width: 240px;
+        padding: 20px;
+        padding-right: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
-    .stackContainer {
-        position: absolute;
-        top: 0px;
+    .stack {
+        flex: 1;
+        width: 100%;
     }
-    .sliderContainer {
-        position: absolute;
-        bottom: 0px;
+    .slider {
+        width: 100%;
     }
 </style>

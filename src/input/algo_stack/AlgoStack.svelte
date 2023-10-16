@@ -55,7 +55,7 @@
     .container {
         display: flex;
         flex-direction: column;
-        margin: 15px;
+        width: 100%;
     }
     .buttons {
         display: flex;

@@ -7,10 +7,8 @@
     import { runAll, runStep } from "./algos/algo_utils";
     import { Data } from "./data/data";
 
-    let innerWidth: number;
-    let innerHeight: number;
-    $: width = innerWidth - 17;
-    $: height = innerHeight - 17;
+    let width: number;
+    let height: number;
 
     let data = new Data();
     $: {
@@ -20,11 +18,9 @@
     }
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight />
-
 <div id="app">
-    <div id="canvas">
-        <Canvas>
+    <div id="canvas" bind:clientHeight={height} bind:clientWidth={width}>
+        <Canvas bind:width bind:height>
             {#each data.nodes.all() as point}
                 <Node coords={data.nodes.get(point)} />
             {/each}
@@ -35,15 +31,23 @@
             {/each}
         </Canvas>
     </div>
-    <Input />
+    <div id="input">
+        <Input />
+    </div>
 </div>
 
 <style>
-    .canvas {
-        float: left;
-    }
-    .app {
+    #app {
+        position: absolute;
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: row;
+        overflow: hidden;
+    }
+    #canvas {
+        padding: 10px;
+        flex: 1;
+        height: 90%;
     }
 </style>
