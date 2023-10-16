@@ -29,10 +29,11 @@
     .slidercontainer {
         width: 200px;
         height: 50px;
+        margin: 20px;
     }
 
     input {
-        width: 100%;
+        width: 80%;
         height: 14px;
         cursor: pointer;
         background-color: transparent;

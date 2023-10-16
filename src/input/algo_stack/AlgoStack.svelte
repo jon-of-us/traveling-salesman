@@ -9,6 +9,7 @@
         type optimAlgoLabel,
         algoDescription,
     } from "../../algos/algo_utils";
+    import { fontColor } from "../../global_settings";
 
     export let initAlgo: initAlgoLabel;
     export let optimAlgoStack: optimAlgoLabel[];
@@ -25,12 +26,14 @@
     }
 </script>
 
-<div>
+<div class="container">
+    <div style:color={fontColor}>initialization Algorithm:</div>
     <AlgoSelector
         algoOptions={[...initAlgoLabels.values()]}
         bind:selectedOption={initAlgo}
         {algoDescription}
     />
+    <div style:color={fontColor}>optimization Algorithms:</div>
     {#each optimAlgoStack as optim}
         <AlgoSelector
             algoOptions={[...optimAlgoLabels.values()]}
@@ -38,16 +41,23 @@
             {algoDescription}
         />
     {/each}
-    {#if optimAlgoStack.length > 0}
-        <Button text="-" on:click={removeOptimizer} />
-    {/if}
-    {#if optimAlgoStack.length + 1 <= maxStackLen}
-        <Button text="+" on:click={addOptimizer} />
-    {/if}
+    <div class="buttons">
+        {#if optimAlgoStack.length > 0}
+            <Button text="-" on:click={removeOptimizer} />
+        {/if}
+        {#if optimAlgoStack.length + 1 <= maxStackLen}
+            <Button text="+" on:click={addOptimizer} />
+        {/if}
+    </div>
 </div>
 
 <style>
-    div {
+    .container {
+        display: flex;
+        flex-direction: column;
+        margin: 15px;
+    }
+    .buttons {
         display: flex;
         flex-direction: row;
     }

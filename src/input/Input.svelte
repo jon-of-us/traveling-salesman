@@ -5,8 +5,8 @@
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
 </script>
 
-<div>
-    <div class="algoStack">
+<div class="container">
+    <div class="stackContainer">
         <AlgoStack
             bind:initAlgo={$input_store.initAlgo}
             bind:optimAlgoStack={$input_store.optimAlgoStack}
@@ -23,14 +23,18 @@
 </div>
 
 <style>
-    .algoStack {
+    .container {
         position: absolute;
-        top: 20px;
-        left: 30px;
+        top: 0px;
+        bottom: 0px;
+        right: 0px;
+    }
+    .stackContainer {
+        position: relative;
+        top: 0px;
     }
     .sliderContainer {
-        position: absolute;
-        right: 30px;
-        top: 20px;
+        position: relative;
+        bottom: 0px;
     }
 </style>
