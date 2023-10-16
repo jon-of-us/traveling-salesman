@@ -1,4 +1,5 @@
 <script>
+    import { fontColor } from "../../global_settings";
     import {
         buttonMargin,
         stackHeight,
@@ -14,7 +15,12 @@
     style:height={stackHeight.px()}
     style:width={stackHeight.px()}
 >
-    <h1 style:font-size={stackHeight.multiply(0.9).px()}>{text}</h1>
+    <h1
+        style:color={fontColor}
+        style:font-size={stackHeight.multiply(0.9).px()}
+    >
+        {text}
+    </h1>
 </button>
 
 <style>
@@ -24,8 +30,9 @@
         align-items: center;
         border: none;
         outline: none;
+        border-radius: 10%;
     }
     h1 {
-        transform: translate(0%, -12%);
+        transform: translate(0%, -5%);
     }
 </style>

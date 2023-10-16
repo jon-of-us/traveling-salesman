@@ -1,6 +1,7 @@
 <!-- Dropdown.svelte -->
 
 <script lang="ts">
+    import { fontColor } from "../../global_settings";
     import {
         backgroundColor,
         buttonMargin,
@@ -15,10 +16,11 @@
 <!-- HTML structure for the dropdown -->
 <div>
     <select
-        style:backgroundColor
+        style:background-color={backgroundColor}
         style:margin={buttonMargin.px()}
         style:height={stackHeight.px()}
-        style:width={stackHeight.multiply(2).px()}
+        style:width={stackHeight.multiply(3.5).px()}
+        style:color={fontColor}
         id="options"
         bind:value={selectedOption}
     >
@@ -30,7 +32,12 @@
     </select>
 </div>
 
-<style>
+<style lang>
+    select {
+        border-radius: 10%;
+        border: none;
+        outline: none;
+    }
     div {
         border: none;
         outline: none;

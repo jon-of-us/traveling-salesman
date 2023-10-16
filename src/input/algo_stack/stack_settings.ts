@@ -1,7 +1,7 @@
 import { CssValue } from "../../generic_utils/css";
 
 //style
-export const backgroundColor = "#404040";
+export const backgroundColor = "#353535";
 export const stackHeight = new CssValue(40);
 export const buttonMargin = new CssValue(5);
 
