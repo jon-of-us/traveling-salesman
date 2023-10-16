@@ -31,7 +31,7 @@
         bind:selectedOption={initAlgo}
         {algoDescription}
     />
-    {#each optimAlgoLabels as optim}
+    {#each optimAlgoStack as optim}
         <AlgoSelector
             algoOptions={[...optimAlgoLabels.values()]}
             bind:selectedOption={optim}
