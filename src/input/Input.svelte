@@ -28,13 +28,14 @@
         top: 0px;
         bottom: 0px;
         right: 0px;
+        width: 220px;
     }
     .stackContainer {
-        position: relative;
+        position: absolute;
         top: 0px;
     }
     .sliderContainer {
-        position: relative;
+        position: absolute;
         bottom: 0px;
     }
 </style>

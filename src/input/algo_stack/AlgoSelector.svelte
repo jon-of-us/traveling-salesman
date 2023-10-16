@@ -19,7 +19,6 @@
         style:background-color={backgroundColor}
         style:margin={buttonMargin.px()}
         style:height={stackHeight.px()}
-        style:width={stackHeight.multiply(3.5).px()}
         style:color={fontColor}
         id="options"
         bind:value={selectedOption}
@@ -37,6 +36,7 @@
         border-radius: 10%;
         border: none;
         outline: none;
+        width: 100%;
     }
     div {
         border: none;

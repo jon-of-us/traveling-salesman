@@ -23,13 +23,27 @@
 <svelte:window bind:innerWidth bind:innerHeight />
 
 <div id="app">
+    <div id="canvas">
+        <Canvas>
+            {#each data.nodes.all() as point}
+                <Node coords={data.nodes.get(point)} />
+            {/each}
+            {#each data.edges.all() as edge}
+                <Edge
+                    coords={[data.nodes.get(edge[0]), data.nodes.get(edge[1])]}
+                />
+            {/each}
+        </Canvas>
+    </div>
     <Input />
-    <Canvas bind:width bind:height>
-        {#each data.nodes.all() as point}
-            <Node coords={data.nodes.get(point)} />
-        {/each}
-        {#each data.edges.all() as edge}
-            <Edge coords={[data.nodes.get(edge[0]), data.nodes.get(edge[1])]} />
-        {/each}
-    </Canvas>
 </div>
+
+<style>
+    .canvas {
+        float: left;
+    }
+    .app {
+        display: flex;
+        flex-direction: row;
+    }
+</style>
