@@ -5,7 +5,6 @@
     import Node from "./visual/Node.svelte";
     import Edge from "./visual/Edge.svelte";
     import { runAll, runStep } from "./algos/algo_utils";
-    import { algoLabels } from "./algos/algo_utils";
     import { Data } from "./data/data";
 
     let innerWidth: number;
@@ -16,9 +15,7 @@
     let data = new Data();
     $: {
         data.adjustNumberOfNodes($input_store.nPoints);
-        runAll(data, algoLabels.shortestEdge);
-        // runAll(data, algoLabels.nextNeighbor);
-        runAll(data, algoLabels.twoOpt);
+        runAll(data, "random");
         data = data;
     }
 </script>
