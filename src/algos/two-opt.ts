@@ -12,7 +12,7 @@ export function* twoOpt(data: Data) {
 /**return if anything changed */
 function twoOptStep(data: Data): boolean {
     let edgeList = [...data.edges.all()];
-    while (edgeList.length >= 4) {
+    while (edgeList.length >= 2) {
         let edge1 = edgeList.pop()!;
         for (let edge2 of edgeList) {
             let [crossing, newEdge1, newEdge2] = edgesAreCrossing(
