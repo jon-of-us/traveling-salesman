@@ -46,8 +46,8 @@
         overflow: hidden;
     }
     #canvas {
-        padding: 10px;
+        border-style: border-box;
+        margin: 15px;
         flex: 1;
-        height: 90%;
     }
 </style>
