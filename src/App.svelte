@@ -6,15 +6,21 @@
     import Edge from "./visual/Edge.svelte";
     import { runAll, runStep } from "./algos/algo_utils";
     import { Data } from "./data/data";
+    import { Layer } from "svelte-canvas";
 
     let width: number;
     let height: number;
 
     let data = new Data();
+    let runs = 0;
     $: {
         data.adjustNumberOfNodes($input_store.nPoints);
-        runAll(data, "random");
+        runAll(data, $input_store.initAlgo);
+        for (let algo of $input_store.optimAlgoStack) {
+            runAll(data, algo);
+        }
         data = data;
+        runs += 1;
     }
 </script>
 
@@ -29,6 +35,11 @@
                     coords={[data.nodes.get(edge[0]), data.nodes.get(edge[1])]}
                 />
             {/each}
+            <Layer
+                render={({ context }) => {
+                    runs;
+                }}
+            />
         </Canvas>
     </div>
     <div id="input">
