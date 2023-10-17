@@ -10,6 +10,7 @@
         algoDescription,
     } from "../../algos/algo_utils";
     import { fontColor } from "../../global_settings";
+    import { input_store } from "../input_store";
 
     export let initAlgo: initAlgoLabel;
     export let optimAlgoStack: optimAlgoLabel[];
@@ -32,13 +33,15 @@
         algoOptions={[...initAlgoLabels.values()]}
         bind:selectedOption={initAlgo}
         {algoDescription}
+        length={$input_store.length[0]}
     />
     <div style:color={fontColor}>optimization Algorithms:</div>
-    {#each optimAlgoStack as optim}
+    {#each optimAlgoStack as optim, i}
         <AlgoSelector
             algoOptions={[...optimAlgoLabels.values()]}
             bind:selectedOption={optim}
             {algoDescription}
+            length={$input_store.length[i + 1]}
         />
     {/each}
     <div class="buttons">

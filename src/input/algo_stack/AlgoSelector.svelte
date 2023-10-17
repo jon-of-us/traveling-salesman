@@ -11,6 +11,7 @@
     export let selectedOption: string;
     export let algoOptions: string[];
     export let algoDescription: (arg0: any) => string;
+    export let length: number | string;
 </script>
 
 <!-- HTML structure for the dropdown -->
@@ -29,6 +30,11 @@
             >
         {/each}
     </select>
+    <sub
+        >length after execution: {typeof length == "number"
+            ? Math.round(length * 100) / 100
+            : length}</sub
+    >
 </div>
 
 <style lang>
@@ -41,5 +47,8 @@
     div {
         border: none;
         outline: none;
+    }
+    sub {
+        color: #c66d00;
     }
 </style>

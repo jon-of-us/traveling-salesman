@@ -6,4 +6,5 @@ export const input_store = writable({
     nPoints: 20,
     initAlgo: initAlgoLabels[0],
     optimAlgoStack: [optimAlgoLabels[0]] as optimAlgoLabel[],
+    length: ["?", "?"] as (number | "?")[],
 });
