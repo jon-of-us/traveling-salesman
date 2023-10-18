@@ -14,13 +14,12 @@
     let data = new Data();
     let runs = 0;
     $: {
-        $input_store.length = [];
         data.adjustNumberOfNodes($input_store.nPoints);
-        $input_store.length.push(data.totalLength());
-        runAll(data, $input_store.initAlgo);
-        for (let algo of $input_store.optimAlgoStack) {
-            runAll(data, algo);
-            $input_store.length.push(data.totalLength());
+        runAll(data, $input_store.initAlgoAndLeng[0]);
+        $input_store.initAlgoAndLeng[1] = data.totalLength();
+        for (let algoAndLeng of $input_store.optimAlgoAndLengStack) {
+            runAll(data, algoAndLeng[0]);
+            algoAndLeng[1] = data.totalLength();
         }
         data = data;
         runs += 1;

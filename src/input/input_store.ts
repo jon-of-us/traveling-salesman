@@ -1,10 +1,9 @@
 import { writable } from "svelte/store";
-import type { initAlgoLabel, optimAlgoLabel } from "../algos/algo_utils";
+import type { initAlgoAndLeng, optimAlgoAndLeng } from "../algos/algo_utils";
 import { initAlgoLabels, optimAlgoLabels } from "../algos/algo_utils";
 
 export const input_store = writable({
     nPoints: 20,
-    initAlgo: initAlgoLabels[0],
-    optimAlgoStack: [optimAlgoLabels[0]] as optimAlgoLabel[],
-    length: ["?", "?"] as (number | "?")[],
+    initAlgoAndLeng: [initAlgoLabels[0], "?"] as initAlgoAndLeng,
+    optimAlgoAndLengStack: [[optimAlgoLabels[0], "?"]] as optimAlgoAndLeng[],
 });

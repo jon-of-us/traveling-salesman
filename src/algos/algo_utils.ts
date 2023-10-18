@@ -11,11 +11,14 @@ export const initAlgoLabels = [
     "Cheapest insertion",
 ] as const;
 export type initAlgoLabel = (typeof initAlgoLabels)[number];
+export type initAlgoAndLeng = [initAlgoLabel, number | "?"];
 
 export const optimAlgoLabels = ["2-Opt", "Next neighbor"] as const;
 export type optimAlgoLabel = (typeof optimAlgoLabels)[number];
+export type optimAlgoAndLeng = [optimAlgoLabel, number | "?"];
 
 export type algoLabel = initAlgoLabel | optimAlgoLabel;
+export type algoAndLeng = [algoLabel, number | "?"];
 
 export type algorithm = (data: Data) => Generator<undefined, void, unknown>;
 

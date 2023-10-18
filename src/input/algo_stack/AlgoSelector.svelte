@@ -30,11 +30,11 @@
             >
         {/each}
     </select>
-    <sub
-        >length after execution: {typeof length == "number"
+    <sub>
+        length after execution: {typeof length == "number"
             ? Math.round(length * 100) / 100
-            : length}</sub
-    >
+            : length}
+    </sub>
 </div>
 
 <style lang>
@@ -49,6 +49,8 @@
         outline: none;
     }
     sub {
-        color: #c66d00;
+        position: relative;
+        color: #00df16;
+        top: -10px;
     }
 </style>

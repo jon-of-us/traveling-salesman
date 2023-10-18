@@ -8,8 +8,8 @@
 <div class="container">
     <div class="stack">
         <AlgoStack
-            bind:initAlgo={$input_store.initAlgo}
-            bind:optimAlgoStack={$input_store.optimAlgoStack}
+            bind:initAlgoAndLeng={$input_store.initAlgoAndLeng}
+            bind:optimAlgoAndLengStack={$input_store.optimAlgoAndLengStack}
         />
     </div>
     <div class="slider">

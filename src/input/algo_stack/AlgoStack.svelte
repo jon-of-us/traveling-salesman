@@ -4,25 +4,24 @@
     import { maxStackLen } from "./stack_settings";
     import {
         initAlgoLabels,
-        type initAlgoLabel,
+        type initAlgoAndLeng,
         optimAlgoLabels,
-        type optimAlgoLabel,
+        type optimAlgoAndLeng,
         algoDescription,
     } from "../../algos/algo_utils";
     import { fontColor } from "../../global_settings";
-    import { input_store } from "../input_store";
 
-    export let initAlgo: initAlgoLabel;
-    export let optimAlgoStack: optimAlgoLabel[];
+    export let initAlgoAndLeng: initAlgoAndLeng;
+    export let optimAlgoAndLengStack: optimAlgoAndLeng[];
 
     function addOptimizer() {
-        optimAlgoStack.push(optimAlgoLabels[0]);
-        optimAlgoStack = optimAlgoStack;
+        optimAlgoAndLengStack.push([optimAlgoLabels[0], "?"]);
+        optimAlgoAndLengStack = optimAlgoAndLengStack;
         console.log("push");
     }
     function removeOptimizer() {
-        optimAlgoStack.pop();
-        optimAlgoStack = optimAlgoStack;
+        optimAlgoAndLengStack.pop();
+        optimAlgoAndLengStack = optimAlgoAndLengStack;
         console.log("pop");
     }
 </script>
@@ -31,24 +30,24 @@
     <div style:color={fontColor}>initialization Algorithm:</div>
     <AlgoSelector
         algoOptions={[...initAlgoLabels.values()]}
-        bind:selectedOption={initAlgo}
+        bind:selectedOption={initAlgoAndLeng[0]}
         {algoDescription}
-        length={$input_store.length[0]}
+        bind:length={initAlgoAndLeng[1]}
     />
     <div style:color={fontColor}>optimization Algorithms:</div>
-    {#each optimAlgoStack as optim, i}
+    {#each optimAlgoAndLengStack as optim, i}
         <AlgoSelector
             algoOptions={[...optimAlgoLabels.values()]}
-            bind:selectedOption={optim}
+            bind:selectedOption={optim[0]}
             {algoDescription}
-            length={$input_store.length[i + 1]}
+            bind:length={optim[1]}
         />
     {/each}
     <div class="buttons">
-        {#if optimAlgoStack.length > 0}
+        {#if optimAlgoAndLengStack.length > 0}
             <Button text="-" on:click={removeOptimizer} />
         {/if}
-        {#if optimAlgoStack.length + 1 <= maxStackLen}
+        {#if optimAlgoAndLengStack.length + 1 <= maxStackLen}
             <Button text="+" on:click={addOptimizer} />
         {/if}
     </div>
