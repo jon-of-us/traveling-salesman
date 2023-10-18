@@ -14,6 +14,12 @@
     export let initAlgoAndLeng: initAlgoAndLeng;
     export let optimAlgoAndLengStack: optimAlgoAndLeng[];
 
+    $: lengs = [
+        initAlgoAndLeng[1],
+        ...optimAlgoAndLengStack.map((o) => o[1]),
+    ].filter((o) => typeof o == "number") as number[];
+    $: maxLeng = lengs.length == 0 ? "?" : (Math.max(...lengs) as number | "?");
+
     function addOptimizer() {
         optimAlgoAndLengStack.push([optimAlgoLabels[0], "?"]);
         optimAlgoAndLengStack = optimAlgoAndLengStack;
@@ -33,6 +39,7 @@
         bind:selectedOption={initAlgoAndLeng[0]}
         {algoDescription}
         bind:length={initAlgoAndLeng[1]}
+        bind:maxLeng
     />
     <div style:color={fontColor}>optimization Algorithms:</div>
     {#each optimAlgoAndLengStack as optim, i}
@@ -41,6 +48,7 @@
             bind:selectedOption={optim[0]}
             {algoDescription}
             bind:length={optim[1]}
+            bind:maxLeng
         />
     {/each}
     <div class="buttons">

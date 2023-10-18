@@ -7,11 +7,13 @@
         buttonMargin,
         stackHeight,
     } from "./stack_settings";
+    import LengBar from "./LengBar.svelte";
 
     export let selectedOption: string;
     export let algoOptions: string[];
     export let algoDescription: (arg0: any) => string;
-    export let length: number | string;
+    export let length: number | "?";
+    export let maxLeng: number | "?";
 </script>
 
 <!-- HTML structure for the dropdown -->
@@ -30,11 +32,7 @@
             >
         {/each}
     </select>
-    <sub>
-        length after execution: {typeof length == "number"
-            ? Math.round(length * 100) / 100
-            : length}
-    </sub>
+    <LengBar {length} {maxLeng} />
 </div>
 
 <style lang>
@@ -47,10 +45,5 @@
     div {
         border: none;
         outline: none;
-    }
-    sub {
-        position: relative;
-        color: #00df16;
-        top: -10px;
     }
 </style>
