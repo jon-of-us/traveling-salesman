@@ -14,6 +14,6 @@
 <style>
     div {
         z-index: -1;
-        position: absolute;
+        position: fixed;
     }
 </style>

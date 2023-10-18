@@ -52,11 +52,12 @@
 <style>
     #app {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
         display: flex;
         flex-direction: row;
-        overflow: hidden;
     }
     #canvas {
         border-style: border-box;
