@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Button from "./Button.svelte";
+    import SquareButton from "./SquareButton.svelte";
     import AlgoSelector from "./AlgoSelector.svelte";
     import { maxStackLen } from "./stack_settings";
     import {
@@ -10,9 +10,11 @@
         algoDescription,
     } from "../../algos/algo_utils";
     import { fontColor } from "../../global_settings";
+    import RunButton from "./RunButton.svelte";
 
     export let initAlgoAndLeng: initAlgoAndLeng;
     export let optimAlgoAndLengStack: optimAlgoAndLeng[];
+    export let run: () => void;
 
     $: lengs = [
         initAlgoAndLeng[1],
@@ -41,6 +43,7 @@
         bind:length={initAlgoAndLeng[1]}
         bind:maxLeng
     />
+    <div style:height={"20px"} />
     <div style:color={fontColor}>optimization Algorithms:</div>
     {#each optimAlgoAndLengStack as optim, i}
         <AlgoSelector
@@ -51,13 +54,15 @@
             bind:maxLeng
         />
     {/each}
+    <div style:height={"15px"} />
     <div class="buttons">
         {#if optimAlgoAndLengStack.length > 0}
-            <Button text="-" on:click={removeOptimizer} />
+            <SquareButton text="-" on:click={removeOptimizer} />
         {/if}
         {#if optimAlgoAndLengStack.length + 1 <= maxStackLen}
-            <Button text="+" on:click={addOptimizer} />
+            <SquareButton text="+" on:click={addOptimizer} />
         {/if}
+        <RunButton {run} />
     </div>
 </div>
 

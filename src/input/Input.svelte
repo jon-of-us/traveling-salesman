@@ -3,6 +3,8 @@
     import { input_store } from "./input_store";
     import * as is from "./input_settings";
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
+
+    export let run: () => void;
 </script>
 
 <div class="container">
@@ -10,6 +12,7 @@
         <AlgoStack
             bind:initAlgoAndLeng={$input_store.initAlgoAndLeng}
             bind:optimAlgoAndLengStack={$input_store.optimAlgoAndLengStack}
+            {run}
         />
     </div>
     <div class="slider">

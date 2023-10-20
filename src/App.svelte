@@ -24,6 +24,7 @@
         data = data;
         runs += 1;
     }
+    function run() {}
 </script>
 
 <div id="app">
@@ -45,7 +46,7 @@
         </Canvas>
     </div>
     <div id="input">
-        <Input />
+        <Input {run} />
     </div>
 </div>
 

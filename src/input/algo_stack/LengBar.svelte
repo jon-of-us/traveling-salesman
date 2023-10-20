@@ -8,14 +8,17 @@
                 : 0
             : 0
     }%`;
+    import * as ss from "./stack_settings";
 </script>
 
 <div id="container" style:width title="length after this algorithm ran">
-    <sub>
-        {typeof length == "number" ? Math.round(length * 100) / 100 : length}
+    <sub style:color={ss.green}>
+        {typeof length == "number"
+            ? (length.toString() + "    ").slice(0, 4)
+            : length}
     </sub>
 
-    <button />
+    <button style:background-color={ss.green} />
 </div>
 
 <style>
@@ -25,11 +28,8 @@
         flex-direction: row;
         float: right;
     }
-    sub {
-        color: #00df16;
-    }
+
     button {
-        background-color: #00df16;
         flex: 1;
         border-radius: 5px;
         border: 0px;

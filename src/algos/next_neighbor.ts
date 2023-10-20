@@ -15,12 +15,12 @@ export function* nextNeighbor(data: Data) {
     }
 }
 
-/** return true if place of insertion changed */
+/**removes node from cycle, and reinserts it in the optimal edge. return true if place of insertion changed */
 function optimizeConnection(node: pointIdx, data: Data): boolean {
-    const nodeNeigbors = [...data.neighbors(node)];
-    data.edges.delete([node, nodeNeigbors[0]]);
-    data.edges.delete([node, nodeNeigbors[1]]);
-    const skippedConnection: nodePair = [nodeNeigbors[0], nodeNeigbors[1]];
+    const nodeNeighbors = [...data.neighbors(node)];
+    data.edges.delete([node, nodeNeighbors[0]]);
+    data.edges.delete([node, nodeNeighbors[1]]);
+    const skippedConnection: nodePair = [nodeNeighbors[0], nodeNeighbors[1]];
     data.edges.add(skippedConnection);
     insertNodeCheap(node, data);
     return data.edges.has(skippedConnection);
