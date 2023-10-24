@@ -34,7 +34,24 @@
         height: 100%;
         display: flex;
         flex-direction: column;
+        overflow-y: auto;
     }
+    .container::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .container::-webkit-scrollbar-track {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .container::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .container::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
     .stack {
         flex: 1;
         width: 100%;

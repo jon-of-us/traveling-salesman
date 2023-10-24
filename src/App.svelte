@@ -4,7 +4,7 @@
     import Canvas from "./canvas/Canvas.svelte";
     import Node from "./visual/Node.svelte";
     import Edge from "./visual/Edge.svelte";
-    import { runAll, runStep } from "./algos/algo_utils";
+    import { runAll, runSteps } from "./algos/algo_utils";
     import { Data } from "./data/data";
     import { Layer } from "svelte-canvas";
 
@@ -15,16 +15,35 @@
     let runs = 0;
     $: {
         data.adjustNumberOfNodes($input_store.nPoints);
-        runAll(data, $input_store.initAlgoAndLeng[0]);
-        $input_store.initAlgoAndLeng[1] = data.totalLength();
-        for (let algoAndLeng of $input_store.optimAlgoAndLengStack) {
-            runAll(data, algoAndLeng[0]);
-            algoAndLeng[1] = data.totalLength();
-        }
+        // runAll(data, $input_store.initAlgoAndLeng[0]);
+        // $input_store.initAlgoAndLeng[1] = data.totalLength();
+        // for (let algoAndLeng of $input_store.optimAlgoAndLengStack) {
+        //     runAll(data, algoAndLeng[0]);
+        //     algoAndLeng[1] = data.totalLength();
+        // }
         data = data;
         runs += 1;
     }
-    function run() {}
+    function* iterAlgos() {
+        let algos = [
+            $input_store.initAlgoAndLeng[0],
+            ...$input_store.optimAlgoAndLengStack.map((o) => o[0]),
+        ];
+        for (let algo of algos) {
+            yield* runSteps(data, algo);
+        }
+    }
+    function run() {
+        let algoIterator = iterAlgos();
+        let interval = setInterval(() => {
+            if (algoIterator.next().done) {
+                clearInterval(interval);
+            }
+            console.log("a");
+            data = data;
+            runs += 1;
+        }, 200);
+    }
 </script>
 
 <div id="app">
@@ -59,6 +78,7 @@
         right: 0px;
         display: flex;
         flex-direction: row;
+        overflow: hidden;
     }
     #canvas {
         border-style: border-box;

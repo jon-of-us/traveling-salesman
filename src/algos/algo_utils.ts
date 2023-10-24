@@ -52,9 +52,9 @@ export function algoFunction(algoLabel: algoLabel): algorithm {
     }
 }
 
-export function runStep(data: Data, algoLabel: algoLabel) {
+export function* runSteps(data: Data, algoLabel: algoLabel) {
     const algoFunc = algoFunction(algoLabel);
-    return algoFunc(data).next().done;
+    yield* algoFunc(data);
 }
 export function runAll(data: Data, algoLabel: algoLabel) {
     const algoFunc = algoFunction(algoLabel);

@@ -25,12 +25,10 @@
     function addOptimizer() {
         optimAlgoAndLengStack.push([optimAlgoLabels[0], "?"]);
         optimAlgoAndLengStack = optimAlgoAndLengStack;
-        console.log("push");
     }
     function removeOptimizer() {
         optimAlgoAndLengStack.pop();
         optimAlgoAndLengStack = optimAlgoAndLengStack;
-        console.log("pop");
     }
 </script>
 
