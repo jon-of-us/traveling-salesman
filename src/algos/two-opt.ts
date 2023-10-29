@@ -39,7 +39,7 @@ export function edgesAreCrossing(
     data: Data
 ): [boolean, nodePair, nodePair] {
     function testSwap(newEdge1: nodePair, newEdge2: nodePair): boolean {
-        if (data.length(newEdge1) + data.length(newEdge2) >= lengSum) {
+        if (data.edgeLength(newEdge1) + data.edgeLength(newEdge2) >= lengSum) {
             return false;
         }
 
@@ -54,7 +54,7 @@ export function edgesAreCrossing(
         return newData.isClosedLoop();
     }
 
-    const lengSum = data.length(edge1) + data.length(edge2);
+    const lengSum = data.edgeLength(edge1) + data.edgeLength(edge2);
     const [p1, p2] = edge1;
     const [p3, p4] = edge2;
     if (p1 == p3 || p1 == p4 || p2 == p3 || p2 == p4)

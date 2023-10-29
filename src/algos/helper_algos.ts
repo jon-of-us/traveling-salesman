@@ -22,9 +22,9 @@ export function findCheapestInsertion(
     let bestEdgeToInsert: nodePair;
     for (let edge of data.edges.all()) {
         const addedLeng =
-            data.length([node, edge[0]]) +
-            data.length([node, edge[1]]) -
-            data.length(edge);
+            data.edgeLength([node, edge[0]]) +
+            data.edgeLength([node, edge[1]]) -
+            data.edgeLength(edge);
         if (addedLeng < minLeng) {
             minLeng = addedLeng;
             bestEdgeToInsert = edge;

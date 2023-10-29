@@ -21,7 +21,7 @@ export class Data {
             }
         }
     }
-    length(edge: nodePair): number {
+    edgeLength(edge: nodePair): number {
         const [x1, y1] = this.nodes.get(edge[0]);
         const [x2, y2] = this.nodes.get(edge[1]);
         return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
@@ -29,7 +29,7 @@ export class Data {
     totalLength(): number {
         let sum = 0;
         for (let edge of this.edges.all()) {
-            sum += this.length(edge);
+            sum += this.edgeLength(edge);
         }
         return sum;
     }

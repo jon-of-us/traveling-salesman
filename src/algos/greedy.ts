@@ -35,7 +35,7 @@ export function* shortestEdge(data: Data) {
     for (let i = 0; i < nodeList.length - 1; i++) {
         for (let j = i + 1; j < nodeList.length; j++) {
             let edge: nodePair = [nodeList[i], nodeList[j]];
-            allEdgesAndLength.push([edge, data.length(edge)]);
+            allEdgesAndLength.push([edge, data.edgeLength(edge)]);
         }
     }
     allEdgesAndLength.sort((a, b) => a[1] - b[1]);
