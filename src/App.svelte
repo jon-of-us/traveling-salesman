@@ -4,17 +4,20 @@
     import Canvas from "./canvas/Canvas.svelte";
     import Node from "./visual/Node.svelte";
     import Edge from "./visual/Edge.svelte";
-    import { runAll, runSteps } from "./algos/algo_utils";
-    import { Data } from "./data/data";
     import { Layer } from "svelte-canvas";
+    import { Memory } from "./data/memory";
 
     let width: number;
     let height: number;
 
-    let data = new Data();
+    let memory = new Memory();
     let runs = 0;
     $: {
         data.adjustNumberOfNodes($input_store.nPoints);
+        let algos = [
+            $input_store.initAlgo[0],
+            ...$input_store.optimAlgoStack.map((o) => o[0]),
+        ];
         // runAll(data, $input_store.initAlgoAndLeng[0]);
         // $input_store.initAlgoAndLeng[1] = data.totalLength();
         // for (let algoAndLeng of $input_store.optimAlgoAndLengStack) {
@@ -25,10 +28,7 @@
         runs += 1;
     }
     function* iterAlgos() {
-        let algos = [
-            $input_store.initAlgoAndLeng[0],
-            ...$input_store.optimAlgoAndLengStack.map((o) => o[0]),
-        ];
+        let;
         for (let algo of algos) {
             yield* runSteps(data, algo);
         }

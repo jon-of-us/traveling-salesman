@@ -49,6 +49,7 @@ export function algoFunction(algoLabel: algoLabel): algorithm {
     }
 }
 
+/** run the algorithm and yield after each step */
 export function* runSteps(data: Data, algoLabel: algoLabel) {
     const algoFunc = algoFunction(algoLabel);
     yield* algoFunc(data);

@@ -10,8 +10,8 @@
 <div class="container">
     <div class="stack">
         <AlgoStack
-            bind:initAlgoAndLeng={$input_store.initAlgoAndLeng}
-            bind:optimAlgoAndLengStack={$input_store.optimAlgoAndLengStack}
+            bind:initAlgo={$input_store.initAlgo}
+            bind:optimAlgoStack={$input_store.optimAlgoStack}
             {run}
         />
     </div>
