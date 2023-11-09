@@ -2,25 +2,10 @@ import { Nodes, type pointIdx } from "./nodes";
 import { Edges, type nodePair } from "./edges";
 
 export class Data {
-    nodes = new Nodes();
     edges = new Edges();
 
-    private addRandomNodes(number = 1): void {
-        for (let i = 0; i < number; i++) {
-            this.nodes.add(Math.random(), Math.random());
-        }
-    }
-    adjustNumberOfNodes(number: number): void {
-        if (this.nodes.count() < number) {
-            this.addRandomNodes(number - this.nodes.count());
-        } else if (this.nodes.count() > number) {
-            // delete last values
-            let values = [...this.nodes.all()].slice(number);
-            for (let value of values) {
-                this.nodes.delete(value);
-            }
-        }
-    }
+    constructor(public nodes = new Nodes()) {}
+
     edgeLength(edge: nodePair): number {
         const [x1, y1] = this.nodes.get(edge[0]);
         const [x2, y2] = this.nodes.get(edge[1]);
