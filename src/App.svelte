@@ -6,57 +6,51 @@
     import Edge from "./visual/Edge.svelte";
     import { Layer } from "svelte-canvas";
     import { Memory } from "./data/memory";
+    import { dataTrace } from "./global_settings";
+    import Edges from "./visual/Edges.svelte";
+    import { Nodes } from "./data/nodes";
 
     let width: number;
     let height: number;
+    let nodes = new Nodes();
 
     let memory = new Memory();
     let runs = 0;
     $: {
-        data.adjustNumberOfNodes($input_store.nPoints);
-        let algos = [
-            $input_store.initAlgo[0],
-            ...$input_store.optimAlgoStack.map((o) => o[0]),
-        ];
-        // runAll(data, $input_store.initAlgoAndLeng[0]);
-        // $input_store.initAlgoAndLeng[1] = data.totalLength();
-        // for (let algoAndLeng of $input_store.optimAlgoAndLengStack) {
-        //     runAll(data, algoAndLeng[0]);
-        //     algoAndLeng[1] = data.totalLength();
-        // }
-        data = data;
+        memory.adjustNumberOfNodes($input_store.nPoints);
+        let algos = [$input_store.initAlgo, ...$input_store.optimAlgoStack];
+        memory.runAlgos(algos);
+        memory = memory;
         runs += 1;
     }
-    function* iterAlgos() {
-        let;
-        for (let algo of algos) {
-            yield* runSteps(data, algo);
-        }
-    }
-    function run() {
-        let algoIterator = iterAlgos();
-        let interval = setInterval(() => {
-            if (algoIterator.next().done) {
-                clearInterval(interval);
-            }
-            console.log("a");
-            data = data;
-            runs += 1;
-        }, 200);
+    let edgesToRender = memory.steps
+        .flat()
+        .slice(
+            Math.max($input_store.renderedStep - dataTrace, 0),
+            $input_store.renderedStep + 1
+        )
+        .map((step) => step.edges);
+    $: {
+        edgesToRender = memory.steps
+            .flat()
+            .slice(
+                Math.max($input_store.renderedStep - dataTrace, 0),
+                $input_store.renderedStep + 1
+            )
+            .map((step) => step.edges);
+        console.log(edgesToRender);
     }
 </script>
 
 <div id="app">
     <div id="canvas" bind:clientHeight={height} bind:clientWidth={width}>
         <Canvas bind:width bind:height>
-            {#each data.nodes.all() as point}
-                <Node coords={data.nodes.get(point)} />
+            {#each memory.nodes.all() as point}
+                <Node coords={memory.nodes.get(point)} />
             {/each}
-            {#each data.edges.all() as edge}
-                <Edge
-                    coords={[data.nodes.get(edge[0]), data.nodes.get(edge[1])]}
-                />
-            {/each}
+
+            <Edges {memory} edges={edgesToRender[0]} />
+
             <Layer
                 render={({ context }) => {
                     runs;
@@ -65,7 +59,7 @@
         </Canvas>
     </div>
     <div id="input">
-        <Input {run} />
+        <Input />
     </div>
 </div>
 
