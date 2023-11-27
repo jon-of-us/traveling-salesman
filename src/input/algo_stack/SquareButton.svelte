@@ -1,5 +1,5 @@
 <script>
-    import { fontColor } from "../../global_settings";
+    import { fontColor } from "../../settings";
     import {
         buttonMargin,
         stackHeight,

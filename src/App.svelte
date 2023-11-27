@@ -6,7 +6,7 @@
     import Edges from "./visual/Edges.svelte";
     import { Layer } from "svelte-canvas";
     import { Memory } from "./data/memory";
-    import { dataTrace } from "./global_settings";
+    import { dataTrace } from "./settings";
 
     let width: number;
     let height: number;

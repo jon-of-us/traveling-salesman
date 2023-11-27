@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as ts from "../global_settings";
+    import * as ts from "../settings";
 
     export let min = 0;
     export let max = 100;

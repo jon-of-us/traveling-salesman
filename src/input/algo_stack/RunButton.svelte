@@ -1,17 +1,13 @@
 <script lang="ts">
-    import { fontColor } from "../../global_settings";
-    import {
-        buttonMargin,
-        stackHeight,
-        backgroundColor,
-    } from "./stack_settings";
+    import { fontColor } from "../../settings";
+    import { buttonMargin, stackHeight, buttonColor } from "../../settings";
 
     export let run: () => void;
 </script>
 
 <button
     on:click={run}
-    style:background-color={backgroundColor}
+    style:background-color={buttonColor}
     style:margin={buttonMargin.px()}
     style:height={stackHeight.px()}
 >

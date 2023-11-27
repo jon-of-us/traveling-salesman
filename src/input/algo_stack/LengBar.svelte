@@ -8,17 +8,17 @@
                 : 0
             : 0
     }%`;
-    import * as ss from "./stack_settings";
+    import * as s from "../../settings";
 </script>
 
 <div id="container" style:width title="length after this algorithm ran">
-    <sub style:color={ss.green}>
+    <sub style:color={s.green}>
         {typeof length == "number"
             ? (length.toString() + "    ").slice(0, 4)
             : length}
     </sub>
 
-    <button style:background-color={ss.green} />
+    <button style:background-color={s.green} />
 </div>
 
 <style>

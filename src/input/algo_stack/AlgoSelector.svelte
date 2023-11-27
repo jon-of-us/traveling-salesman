@@ -1,7 +1,7 @@
 <!-- Dropdown.svelte -->
 
 <script lang="ts">
-    import { fontColor } from "../../global_settings";
+    import { fontColor } from "../../settings";
     import {
         backgroundColor,
         buttonMargin,

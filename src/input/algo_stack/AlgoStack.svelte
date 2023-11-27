@@ -1,7 +1,7 @@
-<script lang="ts">
+<!-- <script lang="ts">
     import SquareButton from "./SquareButton.svelte";
     import AlgoSelector from "./AlgoSelector.svelte";
-    import { maxStackLen } from "./stack_settings";
+    import { maxStackLen } from "../../settings";
     import {
         initAlgoLabels,
         type initAlgoAndLeng,
@@ -9,7 +9,7 @@
         type optimAlgoAndLeng,
         algoDescription,
     } from "../../algos/algo_utils";
-    import { fontColor } from "../../global_settings";
+    import { fontColor } from "../../settings";
     import RunButton from "./RunButton.svelte";
 
     export let initAlgo: initAlgoAndLeng;
@@ -73,4 +73,4 @@
         display: flex;
         flex-direction: row;
     }
-</style>
+</style> -->

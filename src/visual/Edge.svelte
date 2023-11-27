@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Layer, type Render } from "svelte-canvas";
-    import * as vs from "./visual_settings";
-    import * as gs from "../global_settings";
+    import * as s from "../settings";
     import { type pointCoords } from "../data/nodes";
 
     export let coords: [pointCoords, pointCoords];
@@ -12,8 +11,8 @@
         context.beginPath();
         context.moveTo(x1 * width, y1 * height);
         context.lineTo(x2 * width, y2 * height);
-        context.strokeStyle = gs.fontColorTransparent(opacity);
-        context.lineWidth = vs.lineWidth;
+        context.strokeStyle = s.fontColorTransparent(opacity);
+        context.lineWidth = s.lineWidth;
         context.stroke();
     };
 </script>
