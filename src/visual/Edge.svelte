@@ -6,12 +6,13 @@
 
     export let coords: [pointCoords, pointCoords];
     $: [[x1, y1], [x2, y2]] = coords;
+    export let opacity = 1;
 
     const render: Render = ({ context, width, height }) => {
         context.beginPath();
         context.moveTo(x1 * width, y1 * height);
         context.lineTo(x2 * width, y2 * height);
-        context.strokeStyle = gs.fontColor;
+        context.strokeStyle = gs.fontColorTransparent(opacity);
         context.lineWidth = vs.lineWidth;
         context.stroke();
     };

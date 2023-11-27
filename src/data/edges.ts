@@ -14,6 +14,10 @@ export class Edges {
         let b = num - (a * (a + 1)) / 2;
         return [a, b];
     }
+    constructor(edgesToCopy?: Edges) {
+        if (edgesToCopy == undefined) return;
+        this.edges = structuredClone(edgesToCopy!.edges)!;
+    }
     add(p: nodePair): void {
         if (p[0] === p[1]) throw new Error("self loop not allowed");
         this.edges.add(this.associateNumber(p));

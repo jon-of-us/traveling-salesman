@@ -2,17 +2,14 @@
     import Input from "./input/Input.svelte";
     import { input_store } from "./input/input_store";
     import Canvas from "./canvas/Canvas.svelte";
-    import Node from "./visual/Node.svelte";
-    import Edge from "./visual/Edge.svelte";
+    import Nodes from "./visual/Nodes.svelte";
+    import Edges from "./visual/Edges.svelte";
     import { Layer } from "svelte-canvas";
     import { Memory } from "./data/memory";
     import { dataTrace } from "./global_settings";
-    import Edges from "./visual/Edges.svelte";
-    import { Nodes } from "./data/nodes";
 
     let width: number;
     let height: number;
-    let nodes = new Nodes();
 
     let memory = new Memory();
     let runs = 0;
@@ -23,33 +20,24 @@
         memory = memory;
         runs += 1;
     }
-    let edgesToRender = memory.steps
+    /**array of all steps which should be rendered.
+     * For each step an array of all edges.
+     * Latest step is first element in the array*/
+    $: stepsToRender = memory.steps
         .flat()
         .slice(
             Math.max($input_store.renderedStep - dataTrace, 0),
             $input_store.renderedStep + 1
         )
-        .map((step) => step.edges);
-    $: {
-        edgesToRender = memory.steps
-            .flat()
-            .slice(
-                Math.max($input_store.renderedStep - dataTrace, 0),
-                $input_store.renderedStep + 1
-            )
-            .map((step) => step.edges);
-        console.log(edgesToRender);
-    }
+        .reverse()
+        .map((step) => step.edges.all());
 </script>
 
 <div id="app">
     <div id="canvas" bind:clientHeight={height} bind:clientWidth={width}>
         <Canvas bind:width bind:height>
-            {#each memory.nodes.all() as point}
-                <Node coords={memory.nodes.get(point)} />
-            {/each}
-
-            <Edges {memory} edges={edgesToRender[0]} />
+            <Nodes {memory} />
+            <Edges {memory} {stepsToRender} />
 
             <Layer
                 render={({ context }) => {

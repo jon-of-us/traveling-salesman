@@ -4,7 +4,10 @@ import { initAlgoLabels, optimAlgoLabels } from "../algos/algo_utils";
 
 export const input_store = writable({
     nPoints: 20,
-    renderedStep: 40,
+    renderedStep: 100,
     initAlgo: initAlgoLabels[0] as initAlgoLabel,
-    optimAlgoStack: [optimAlgoLabels[0]] as optimAlgoLabel[],
+    optimAlgoStack: [
+        optimAlgoLabels[0],
+        optimAlgoLabels[1],
+    ] as optimAlgoLabel[],
 });

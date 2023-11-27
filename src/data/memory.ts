@@ -2,7 +2,7 @@ import { Data } from "./data";
 import { type algoLabel } from "../algos/algo_utils";
 import { runSteps } from "../algos/algo_utils";
 import { Nodes } from "./nodes";
-import type { Edges } from "./edges";
+import { Edges } from "./edges";
 
 export type stepArray = { edges: Edges; len: number }[];
 
@@ -43,7 +43,8 @@ export class Memory {
                 let len = changingData.totalLength();
                 this.maxLeng = Math.max(len, this.maxLeng);
 
-                let edges = structuredClone(changingData.edges);
+                let edges = new Edges(changingData.edges);
+
                 stepArr.push({ edges, len });
             };
 

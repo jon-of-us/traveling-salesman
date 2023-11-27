@@ -12,7 +12,7 @@ export const initAlgoLabels = [
 ] as const;
 export type initAlgoLabel = (typeof initAlgoLabels)[number];
 
-export const optimAlgoLabels = ["2-Opt", "Next neighbor"] as const;
+export const optimAlgoLabels = ["Next neighbor", "2-Opt"] as const;
 export type optimAlgoLabel = (typeof optimAlgoLabels)[number];
 
 export type algoLabel = initAlgoLabel | optimAlgoLabel;

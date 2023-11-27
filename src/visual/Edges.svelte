@@ -1,26 +1,20 @@
 <script lang="ts">
     import { Layer } from "svelte-canvas";
-    import type { Edges } from "../data/edges";
+    import type { Edges, nodePair } from "../data/edges";
     import type { Memory } from "../data/memory";
     import Edge from "./Edge.svelte";
 
-    export let edges: Edges;
+    type StepToRender = IterableIterator<nodePair>;
+
+    export let stepsToRender: StepToRender[];
     export let memory: Memory;
 </script>
 
-<!-- {#each edges.all() as edge} -->
-<!-- <Edge
-        coords={[
-            [0, 0],
-            [0, 0],
-        ]}
-    /> -->
-<Layer
-    render={({ context }) => {
-        context.beginPath();
-        context.moveTo(0, 0);
-        context.lineTo(100, 100);
-        context.stroke();
-    }}
-/>
-<!-- {/each} -->
+{#each stepsToRender as edgeIterator, index}
+    {#each edgeIterator as edge}
+        <Edge
+            coords={[memory.nodes.get(edge[0]), memory.nodes.get(edge[1])]}
+            opacity={Math.pow(4, -index)}
+        ></Edge>
+    {/each}
+{/each}

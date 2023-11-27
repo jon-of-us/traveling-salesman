@@ -2,9 +2,7 @@ import { Nodes, type pointIdx } from "./nodes";
 import { Edges, type nodePair } from "./edges";
 
 export class Data {
-    edges = new Edges();
-
-    constructor(public nodes = new Nodes()) {}
+    constructor(public nodes = new Nodes(), public edges = new Edges()) {}
 
     edgeLength(edge: nodePair): number {
         const [x1, y1] = this.nodes.get(edge[0]);
