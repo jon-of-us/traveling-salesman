@@ -4,25 +4,28 @@
     import * as s from "../settings";
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
     import type { Memory } from "../data/memory";
+    import { onMount } from "svelte";
 
     export let memory: Memory;
 
     let container: HTMLDivElement;
-    let scroll = 0;
-    function handleScroll() {
-        scroll = container.scrollTop;
+    onMount(() => {
+        container.addEventListener("wheel", changeRenderdStepOnScroll);
+    });
+
+    function changeRenderdStepOnScroll(e: WheelEvent) {
+        let newStep = $input_store.renderedStep + Math.sign(e.deltaY);
+        newStep = Math.max(0, newStep);
+        const totalSteps = memory.steps.reduce(
+            (prev, step) => prev + step.length,
+            0
+        );
+        newStep = Math.min(totalSteps - 1, newStep);
+        $input_store.renderedStep = newStep;
     }
-    $: $input_store.renderedStep = Math.floor(
-        scroll / s.stackHeight.val() + s.buttonMargin.val() * 2
-    );
 </script>
 
-<div
-    class="container"
-    style:width={s.inputWidth.px()}
-    bind:this={container}
-    on:scroll={handleScroll}
->
+<div class="container" style:width={s.inputWidth.px()} bind:this={container}>
     <div class="stack">
         <AlgoStack
             {memory}
@@ -48,7 +51,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
+        overflow: hidden;
     }
     .container::-webkit-scrollbar {
         width: 10px;

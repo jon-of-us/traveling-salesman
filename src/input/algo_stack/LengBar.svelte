@@ -10,6 +10,18 @@
             ? s.activeBarColor
             : s.inactiveBarColor;
     $: width = `${(step.len / maxLeng) * 100}%`;
+    let button: HTMLButtonElement | undefined;
+
+    $: {
+        if (step.index == $input_store.renderedStep) {
+            button?.scrollIntoView({ behavior: "instant", block: "center" });
+            // scroll faster
+        }
+    }
+
+    function handleClick() {
+        $input_store.renderedStep = step.index;
+    }
 </script>
 
 <div
@@ -19,13 +31,14 @@
 >
     <div id="placehodler"></div>
     <sub style:color>
-        {(length + 0.0001).toString().slice(0, 4)}
+        {(step.len + 0.0001).toString().slice(0, 4)}
     </sub>
 
     <button
         style:background-color={color}
         style:width
-        on:click={() => ($input_store.renderedStep = step.index)}
+        on:click={handleClick}
+        bind:this={button}
     />
 </div>
 
