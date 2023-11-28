@@ -59,9 +59,8 @@ export class Memory {
             for (let _ of runSteps(changingData, algoLabel)) {
                 pushStep();
             }
-            if (algoLabel == algoLabels[-1]) {
-                console.log("pushing 20 more steps");
-                for (let i = 0; i < 20; i++) {
+            if (algoLabel == algoLabels[algoLabels.length - 1]) {
+                for (let i = 0; i < s.dataTrace; i++) {
                     pushStep();
                 }
             }
