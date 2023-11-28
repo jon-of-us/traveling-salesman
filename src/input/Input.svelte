@@ -8,21 +8,24 @@
 
     export let memory: Memory;
 
+    let virtualScroll = 0;
     let container: HTMLDivElement;
-    onMount(() => {
-        container.addEventListener("wheel", changeRenderdStepOnScroll);
-    });
-
-    function changeRenderdStepOnScroll(e: WheelEvent) {
-        let newStep = $input_store.renderedStep + Math.sign(e.deltaY);
-        newStep = Math.max(0, newStep);
-        const totalSteps = memory.steps.reduce(
-            (prev, step) => prev + step.length,
-            0
+    $: {
+        virtualScroll = Math.max(virtualScroll, 0);
+        virtualScroll = Math.min(
+            virtualScroll,
+            (memory.n_steps - 1) / s.scrollSpeed
         );
-        newStep = Math.min(totalSteps - 1, newStep);
-        $input_store.renderedStep = newStep;
+        console.log(virtualScroll);
     }
+    $: $input_store.renderedStep = Math.round(virtualScroll * s.scrollSpeed);
+
+    function adjustVirtualScroll(e: WheelEvent) {
+        virtualScroll += e.deltaY;
+    }
+    onMount(() => {
+        container.addEventListener("wheel", adjustVirtualScroll);
+    });
 </script>
 
 <div class="container" style:width={s.inputWidth.px()} bind:this={container}>

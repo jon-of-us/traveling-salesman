@@ -9,7 +9,7 @@ export function* nextNeighbor(data: Data) {
     for (let i = 0; i < nodeList.length; i++) {
         const node = nodeList[i];
         if (optimizeConnection(node, data)) {
-            i = 0;
+            i = -1;
             yield;
         }
     }

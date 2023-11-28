@@ -11,7 +11,6 @@
     } from "../../algos/algo_utils";
     import type { Memory } from "../../data/memory";
     import LengBar from "./LengBar.svelte";
-    import { input_store } from "../input_store";
 
     export let initAlgo: initAlgoLabel;
     export let optimAlgoStack: optimAlgoLabel[];

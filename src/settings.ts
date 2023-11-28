@@ -30,3 +30,4 @@ export const inactiveBarColor = buttonColor;
 
 // stack
 export const maxStackLen = 5;
+export const scrollSpeed = 0.05;

@@ -8,6 +8,7 @@ export type step = { edges: Edges; len: number; index: number };
 
 export class Memory {
     steps: step[][] = [];
+    n_steps = 0;
     nodes = new Nodes();
     maxLeng = 0;
 
@@ -48,6 +49,7 @@ export class Memory {
 
                 stepArr.push({ edges, len, index });
                 index++;
+                this.n_steps = index;
             };
 
             pushStep();
