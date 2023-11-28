@@ -42,4 +42,7 @@ export class CssValue {
     rem() {
         return `${this.value}rem`;
     }
+    val() {
+        return this.value;
+    }
 }

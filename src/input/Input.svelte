@@ -6,9 +6,23 @@
     import type { Memory } from "../data/memory";
 
     export let memory: Memory;
+
+    let container: HTMLDivElement;
+    let scroll = 0;
+    function handleScroll() {
+        scroll = container.scrollTop;
+    }
+    $: $input_store.renderedStep = Math.floor(
+        scroll / s.stackHeight.val() + s.buttonMargin.val() * 2
+    );
 </script>
 
-<div class="container" style:width={s.inputWidth.px()}>
+<div
+    class="container"
+    style:width={s.inputWidth.px()}
+    bind:this={container}
+    on:scroll={handleScroll}
+>
     <div class="stack">
         <AlgoStack
             {memory}

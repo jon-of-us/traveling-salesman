@@ -1,5 +1,5 @@
 <script lang="ts">
-    import SquareButton from "./SquareButton.svelte";
+    import AlgoButton from "./AlgoButton.svelte";
     import AlgoSelector from "./AlgoSelector.svelte";
     import * as s from "../../settings";
     import {
@@ -36,11 +36,7 @@
         />
     </div>
     {#each memory.steps[0] as step}
-        <LengBar
-            length={step.len}
-            maxLeng={memory.maxLeng}
-            isActive={step.index == $input_store.renderedStep}
-        />
+        <LengBar {step} maxLeng={memory.maxLeng} />
     {/each}
 
     {#each optimAlgoStack as optim, i}
@@ -52,23 +48,16 @@
             />
         </div>
         {#each memory.steps[i + 1] as step}
-            <LengBar
-                length={step.len}
-                maxLeng={memory.maxLeng}
-                isActive={step.index == $input_store.renderedStep}
-            />
+            <LengBar {step} maxLeng={memory.maxLeng} />
         {/each}
     {/each}
 
-    <div class="buttons" style:margin={s.buttonMargin.px()}>
-        <div style:flex="1" />
-        {#if optimAlgoStack.length > 0}
-            <SquareButton text="-" on:click={removeOptimizer} />
-        {/if}
-        {#if optimAlgoStack.length + 1 <= s.maxStackLen}
-            <SquareButton text="+" on:click={addOptimizer} />
-        {/if}
-    </div>
+    {#if optimAlgoStack.length + 1 <= s.maxStackLen}
+        <AlgoButton text="add algorithm" on:click={addOptimizer} />
+    {/if}
+    {#if optimAlgoStack.length > 0}
+        <AlgoButton text="remove algorithm" on:click={removeOptimizer} />
+    {/if}
 </div>
 
 <style>
@@ -77,9 +66,5 @@
         flex-direction: column;
         width: 100%;
         margin-bottom: 20px;
-    }
-    .buttons {
-        display: flex;
-        flex-direction: row;
     }
 </style>

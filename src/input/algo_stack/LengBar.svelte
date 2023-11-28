@@ -1,12 +1,15 @@
 <script lang="ts">
+    import type { step } from "../../data/memory";
     import * as s from "../../settings";
+    import { input_store } from "../input_store";
 
-    export let length: number;
+    export let step: step;
     export let maxLeng: number;
-    export let isActive: boolean = false;
-    $: color = isActive ? s.activeBarColor : s.inactiveBarColor;
-
-    $: width = `${(length / maxLeng) * 100}%`;
+    $: color =
+        step.index == $input_store.renderedStep
+            ? s.activeBarColor
+            : s.inactiveBarColor;
+    $: width = `${(step.len / maxLeng) * 100}%`;
 </script>
 
 <div
@@ -19,7 +22,11 @@
         {(length + 0.0001).toString().slice(0, 4)}
     </sub>
 
-    <button style:background-color={color} style:width />
+    <button
+        style:background-color={color}
+        style:width
+        on:click={() => ($input_store.renderedStep = step.index)}
+    />
 </div>
 
 <style>

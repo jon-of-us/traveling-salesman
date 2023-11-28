@@ -9,8 +9,6 @@
     export let algoDescription: (arg0: any) => string;
 </script>
 
-<!-- HTML structure for the dropdown -->
-<!-- <div> -->
 <select
     style:background-color={buttonColor}
     style:margin={buttonMargin.px()}
@@ -24,17 +22,11 @@
     {/each}
 </select>
 
-<!-- </div> -->
-
-<style lang>
+<style>
     select {
         border-radius: 10%;
         border: none;
         outline: none;
         width: 100%;
-    }
-    div {
-        border: none;
-        outline: none;
     }
 </style>
