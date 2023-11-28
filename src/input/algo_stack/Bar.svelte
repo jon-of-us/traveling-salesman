@@ -1,21 +1,15 @@
 <script lang="ts">
-    export let length: number | "?";
-    export let maxLeng: number | "?";
-    $: width = `${
-        typeof maxLeng == "number"
-            ? typeof length == "number"
-                ? (length / maxLeng) * 100
-                : 0
-            : 0
-    }%`;
     import * as s from "../../settings";
+
+    export let length: number;
+    export let maxLeng: number;
+
+    $: width = (length / maxLeng) * 100;
 </script>
 
 <div id="container" style:width title="length after this algorithm ran">
     <sub style:color={s.green}>
-        {typeof length == "number"
-            ? (length.toString() + "    ").slice(0, 4)
-            : length}
+        {(length.toString() + "    ").slice(0, 4)}
     </sub>
 
     <button style:background-color={s.green} />

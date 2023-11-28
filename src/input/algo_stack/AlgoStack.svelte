@@ -1,28 +1,25 @@
-<!-- <script lang="ts">
+<script lang="ts">
     import SquareButton from "./SquareButton.svelte";
     import AlgoSelector from "./AlgoSelector.svelte";
     import { maxStackLen } from "../../settings";
     import {
         initAlgoLabels,
-        type initAlgoAndLeng,
+        type initAlgoLabel,
         optimAlgoLabels,
-        type optimAlgoAndLeng,
+        type optimAlgoLabel,
         algoDescription,
     } from "../../algos/algo_utils";
     import { fontColor } from "../../settings";
-    import RunButton from "./RunButton.svelte";
+    import type { Memory } from "../../data/memory";
+    import Bar from "./Bar.svelte";
 
-    export let initAlgo: initAlgoAndLeng;
-    export let optimAlgoStack: optimAlgoAndLeng[];
-    export let run: () => void;
-
-    $: lengs = [initAlgo[1], ...optimAlgoStack.map((o) => o[1])].filter(
-        (o) => typeof o == "number"
-    ) as number[];
-    $: maxLeng = lengs.length == 0 ? "?" : (Math.max(...lengs) as number | "?");
+    export let initAlgo: initAlgoLabel;
+    export let optimAlgoStack: optimAlgoLabel[];
+    export let memory: Memory;
+    $: maxLeng = Math.max();
 
     function addOptimizer() {
-        optimAlgoStack.push([optimAlgoLabels[0], "?"]);
+        optimAlgoStack.push(optimAlgoLabels[0]);
         optimAlgoStack = optimAlgoStack;
     }
     function removeOptimizer() {
@@ -35,22 +32,25 @@
     <div style:color={fontColor}>initialization Algorithm:</div>
     <AlgoSelector
         algoOptions={[...initAlgoLabels.values()]}
-        bind:selectedOption={initAlgo[0]}
+        bind:selectedOption={initAlgo}
         {algoDescription}
-        bind:length={initAlgo[1]}
-        bind:maxLeng
     />
+    {#each memory.steps as stepArray}
+        {#each stepArray as step}
+            <Bar length={step.len} {maxLeng} />
+        {/each}
+    {/each}
+
     <div style:height={"20px"} />
     <div style:color={fontColor}>optimization Algorithms:</div>
     {#each optimAlgoStack as optim, i}
         <AlgoSelector
             algoOptions={[...optimAlgoLabels.values()]}
-            bind:selectedOption={optim[0]}
+            bind:selectedOption={optim}
             {algoDescription}
-            bind:length={optim[1]}
-            bind:maxLeng
         />
     {/each}
+
     <div style:height={"15px"} />
     <div class="buttons">
         {#if optimAlgoStack.length > 0}
@@ -59,7 +59,6 @@
         {#if optimAlgoStack.length + 1 <= maxStackLen}
             <SquareButton text="+" on:click={addOptimizer} />
         {/if}
-        <RunButton {run} />
     </div>
 </div>
 
@@ -73,4 +72,4 @@
         display: flex;
         flex-direction: row;
     }
-</style> -->
+</style>

@@ -47,7 +47,7 @@
         </Canvas>
     </div>
     <div id="input">
-        <Input />
+        <Input {memory} />
     </div>
 </div>
 

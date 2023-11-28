@@ -3,10 +3,19 @@
     import { input_store } from "./input_store";
     import * as s from "../settings";
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
+    import type { Memory } from "../data/memory";
+
+    export let memory: Memory;
 </script>
 
 <div class="container">
-    <div class="stack" />
+    <div class="stack">
+        <AlgoStack
+            {memory}
+            bind:initAlgo={$input_store.initAlgo}
+            bind:optimAlgoStack={$input_store.optimAlgoStack}
+        />
+    </div>
     <div class="slider">
         <Slider
             text="Number of Points"

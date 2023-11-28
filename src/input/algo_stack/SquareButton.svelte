@@ -1,16 +1,16 @@
 <script>
-    import { fontColor } from "../../settings";
     import {
+        fontColor,
         buttonMargin,
         stackHeight,
-        backgroundColor,
-    } from "./stack_settings";
+        buttonColor,
+    } from "../../settings";
     export let text = "";
 </script>
 
 <button
     on:click
-    style:background-color={backgroundColor}
+    style:background-color={buttonColor}
     style:margin={buttonMargin.px()}
     style:height={stackHeight.px()}
     style:width={stackHeight.px()}

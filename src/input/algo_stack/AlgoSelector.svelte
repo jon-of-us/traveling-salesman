@@ -2,24 +2,17 @@
 
 <script lang="ts">
     import { fontColor } from "../../settings";
-    import {
-        backgroundColor,
-        buttonMargin,
-        stackHeight,
-    } from "./stack_settings";
-    import LengBar from "./LengBar.svelte";
+    import { buttonColor, buttonMargin, stackHeight } from "../../settings";
 
     export let selectedOption: string;
     export let algoOptions: string[];
     export let algoDescription: (arg0: any) => string;
-    export let length: number | "?";
-    export let maxLeng: number | "?";
 </script>
 
 <!-- HTML structure for the dropdown -->
 <div>
     <select
-        style:background-color={backgroundColor}
+        style:background-color={buttonColor}
         style:margin={buttonMargin.px()}
         style:height={stackHeight.px()}
         style:color={fontColor}
@@ -32,7 +25,6 @@
             >
         {/each}
     </select>
-    <LengBar {length} {maxLeng} />
 </div>
 
 <style lang>
