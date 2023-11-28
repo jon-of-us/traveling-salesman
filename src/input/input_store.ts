@@ -7,7 +7,7 @@ export const input_store = writable({
     renderedStep: 100,
     initAlgo: initAlgoLabels[0] as initAlgoLabel,
     optimAlgoStack: [
-        optimAlgoLabels[0],
-        optimAlgoLabels[1],
+        // optimAlgoLabels[0],
+        // optimAlgoLabels[1],
     ] as optimAlgoLabel[],
 });

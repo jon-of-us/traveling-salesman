@@ -16,13 +16,15 @@ export const lineWidth = 2;
 
 // input
 export const maxPoints = 50;
+export const inputWidth = new CssValue(245);
 /** min 4 for next neighbor */
 export const minPoints = 4;
 
 // stack visual
 export const buttonColor = "#353535";
-export const stackHeight = new CssValue(40);
+export const stackHeight = new CssValue(20);
 export const buttonMargin = new CssValue(5);
+export const squareButtonSize = new CssValue(40);
 export const green = "#00df16";
 
 // stack

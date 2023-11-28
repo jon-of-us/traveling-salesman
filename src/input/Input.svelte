@@ -8,7 +8,7 @@
     export let memory: Memory;
 </script>
 
-<div class="container">
+<div class="container" style:width={s.inputWidth.px()}>
     <div class="stack">
         <AlgoStack
             {memory}
@@ -29,7 +29,6 @@
 <style>
     .container {
         box-sizing: border-box;
-        width: 240px;
         padding: 20px;
         padding-right: 30px;
         height: 100%;

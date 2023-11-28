@@ -5,28 +5,39 @@
     export let maxLeng: number;
 
     $: width = `${(length / maxLeng) * 100}%`;
+    $: console.log(maxLeng);
 </script>
 
-<div id="container" style:width title="length after this algorithm ran">
+<div
+    id="container"
+    title="length after this algorithm ran"
+    style:margin={s.buttonMargin.px()}
+>
+    <div id="placehodler"></div>
     <sub style:color={s.green}>
-        {(length.toString() + "    ").slice(0, 4)}
+        {((length + 0.0001).toString() + "    ").slice(0, 4)}
     </sub>
 
-    <button style:background-color={s.green} />
+    <button style:background-color={s.green} style:width />
 </div>
 
 <style>
-    #container {
-        display: flex;
-        top: -10px;
-        flex-direction: row;
-        float: right;
+    sub {
+        margin: -4px;
+        margin-right: 5px;
     }
-
-    button {
+    #container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    #placehodler {
         flex: 1;
+    }
+    button {
+        align-self: center;
         border-radius: 5px;
         border: 0px;
-        margin: 5px;
+        height: 10px;
     }
 </style>

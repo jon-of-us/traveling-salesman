@@ -10,22 +10,21 @@
 </script>
 
 <!-- HTML structure for the dropdown -->
-<div>
-    <select
-        style:background-color={buttonColor}
-        style:margin={buttonMargin.px()}
-        style:height={stackHeight.px()}
-        style:color={fontColor}
-        id="options"
-        bind:value={selectedOption}
-    >
-        {#each algoOptions as option}
-            <option value={option} title={algoDescription(option)}
-                >{option}</option
-            >
-        {/each}
-    </select>
-</div>
+<!-- <div> -->
+<select
+    style:background-color={buttonColor}
+    style:margin={buttonMargin.px()}
+    style:height={stackHeight.px()}
+    style:color={fontColor}
+    id="options"
+    bind:value={selectedOption}
+>
+    {#each algoOptions as option}
+        <option value={option} title={algoDescription(option)}>{option}</option>
+    {/each}
+</select>
+
+<!-- </div> -->
 
 <style lang>
     select {

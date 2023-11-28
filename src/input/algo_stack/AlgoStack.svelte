@@ -1,7 +1,7 @@
 <script lang="ts">
     import SquareButton from "./SquareButton.svelte";
     import AlgoSelector from "./AlgoSelector.svelte";
-    import { maxStackLen } from "../../settings";
+    import * as s from "../../settings";
     import {
         initAlgoLabels,
         type initAlgoLabel,
@@ -9,14 +9,12 @@
         type optimAlgoLabel,
         algoDescription,
     } from "../../algos/algo_utils";
-    import { fontColor } from "../../settings";
     import type { Memory } from "../../data/memory";
     import LengBar from "./LengBar.svelte";
 
     export let initAlgo: initAlgoLabel;
     export let optimAlgoStack: optimAlgoLabel[];
     export let memory: Memory;
-    $: maxLeng = Math.max();
 
     function addOptimizer() {
         optimAlgoStack.push(optimAlgoLabels[0]);
@@ -29,34 +27,45 @@
 </script>
 
 <div class="container">
-    <div style:color={fontColor}>initialization Algorithm:</div>
-    <AlgoSelector
-        algoOptions={[...initAlgoLabels.values()]}
-        bind:selectedOption={initAlgo}
-        {algoDescription}
-    />
-    {#each memory.steps as stepArray}
-        {#each stepArray as step}
-            <LengBar length={step.len} {maxLeng} />
+    <!-- <div
+        class="text"
+        style:color={fontColor}
+        style:margin={s.buttonMargin.px()}
+    >
+        initialization Algorithm:
+    </div> -->
+    <div title="initialization Algorithm">
+        <AlgoSelector
+            algoOptions={[...initAlgoLabels.values()]}
+            bind:selectedOption={initAlgo}
+            {algoDescription}
+        />
+    </div>
+    {#each memory.steps[0] as step}
+        <LengBar length={step.len} maxLeng={memory.maxLeng} />
+    {/each}
+    <!-- <div style:color={fontColor} style:margin={s.buttonMargin.px()}>
+        optimization Algorithms:
+    </div> -->
+    {#each optimAlgoStack as optim, i}
+        <div title="optimization Algorithm">
+            <AlgoSelector
+                algoOptions={[...optimAlgoLabels.values()]}
+                bind:selectedOption={optim}
+                {algoDescription}
+            />
+        </div>
+        {#each memory.steps[i + 1] as step}
+            <LengBar length={step.len} maxLeng={memory.maxLeng} />
         {/each}
     {/each}
 
-    <div style:height={"20px"} />
-    <div style:color={fontColor}>optimization Algorithms:</div>
-    {#each optimAlgoStack as optim, i}
-        <AlgoSelector
-            algoOptions={[...optimAlgoLabels.values()]}
-            bind:selectedOption={optim}
-            {algoDescription}
-        />
-    {/each}
-
-    <div style:height={"15px"} />
-    <div class="buttons">
+    <div class="buttons" style:margin={s.buttonMargin.px()}>
+        <div style:flex="1" />
         {#if optimAlgoStack.length > 0}
             <SquareButton text="-" on:click={removeOptimizer} />
         {/if}
-        {#if optimAlgoStack.length + 1 <= maxStackLen}
+        {#if optimAlgoStack.length + 1 <= s.maxStackLen}
             <SquareButton text="+" on:click={addOptimizer} />
         {/if}
     </div>
@@ -67,6 +76,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+        margin-bottom: 20px;
     }
     .buttons {
         display: flex;

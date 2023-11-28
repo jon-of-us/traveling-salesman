@@ -4,6 +4,7 @@
         buttonMargin,
         stackHeight,
         buttonColor,
+        squareButtonSize,
     } from "../../settings";
     export let text = "";
 </script>
@@ -11,13 +12,13 @@
 <button
     on:click
     style:background-color={buttonColor}
-    style:margin={buttonMargin.px()}
-    style:height={stackHeight.px()}
-    style:width={stackHeight.px()}
+    style:margin-left={buttonMargin.multiply(2).px()}
+    style:height={squareButtonSize.px()}
+    style:width={squareButtonSize.px()}
 >
     <h1
         style:color={fontColor}
-        style:font-size={stackHeight.multiply(0.9).px()}
+        style:font-size={squareButtonSize.multiply(0.9).px()}
     >
         {text}
     </h1>
