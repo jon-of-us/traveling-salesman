@@ -4,7 +4,7 @@
     export let length: number;
     export let maxLeng: number;
 
-    $: width = (length / maxLeng) * 100;
+    $: width = `${(length / maxLeng) * 100}%`;
 </script>
 
 <div id="container" style:width title="length after this algorithm ran">

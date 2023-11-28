@@ -11,7 +11,7 @@
     } from "../../algos/algo_utils";
     import { fontColor } from "../../settings";
     import type { Memory } from "../../data/memory";
-    import Bar from "./Bar.svelte";
+    import LengBar from "./LengBar.svelte";
 
     export let initAlgo: initAlgoLabel;
     export let optimAlgoStack: optimAlgoLabel[];
@@ -37,7 +37,7 @@
     />
     {#each memory.steps as stepArray}
         {#each stepArray as step}
-            <Bar length={step.len} {maxLeng} />
+            <LengBar length={step.len} {maxLeng} />
         {/each}
     {/each}
 
