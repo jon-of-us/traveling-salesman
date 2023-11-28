@@ -25,7 +25,8 @@ export const buttonColor = "#353535";
 export const stackHeight = new CssValue(20);
 export const buttonMargin = new CssValue(5);
 export const squareButtonSize = new CssValue(40);
-export const green = "#00df16";
+export const activeBarColor = "#00df16";
+export const inactiveBarColor = buttonColor;
 
 // stack
 export const maxStackLen = 5;

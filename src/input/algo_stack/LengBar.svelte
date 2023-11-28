@@ -3,22 +3,23 @@
 
     export let length: number;
     export let maxLeng: number;
+    export let isActive: boolean = false;
+    $: color = isActive ? s.activeBarColor : s.inactiveBarColor;
 
     $: width = `${(length / maxLeng) * 100}%`;
-    $: console.log(maxLeng);
 </script>
 
 <div
     id="container"
-    title="length after this algorithm ran"
+    title="length at this step"
     style:margin={s.buttonMargin.px()}
 >
     <div id="placehodler"></div>
-    <sub style:color={s.green}>
-        {((length + 0.0001).toString() + "    ").slice(0, 4)}
+    <sub style:color>
+        {(length + 0.0001).toString().slice(0, 4)}
     </sub>
 
-    <button style:background-color={s.green} style:width />
+    <button style:background-color={color} style:width />
 </div>
 
 <style>

@@ -4,10 +4,10 @@ import { runSteps } from "../algos/algo_utils";
 import { Nodes } from "./nodes";
 import { Edges } from "./edges";
 
-export type stepArray = { edges: Edges; len: number }[];
+export type step = { edges: Edges; len: number; index: number };
 
 export class Memory {
-    steps: stepArray[] = [];
+    steps: step[][] = [];
     nodes = new Nodes();
     maxLeng = 0;
 
@@ -33,11 +33,12 @@ export class Memory {
         // clear steps and maxLeng
         this.steps = [];
         this.maxLeng = 0;
+        let index = 0;
         /** is mutated with each step*/
         let changingData = new Data(this.nodes);
 
         for (let algoLabel of algoLabels) {
-            let stepArr: stepArray = [];
+            let stepArr: step[] = [];
 
             const pushStep = () => {
                 let len = changingData.totalLength();
@@ -45,7 +46,8 @@ export class Memory {
 
                 let edges = new Edges(changingData.edges);
 
-                stepArr.push({ edges, len });
+                stepArr.push({ edges, len, index });
+                index++;
             };
 
             pushStep();

@@ -11,6 +11,7 @@
     } from "../../algos/algo_utils";
     import type { Memory } from "../../data/memory";
     import LengBar from "./LengBar.svelte";
+    import { input_store } from "../input_store";
 
     export let initAlgo: initAlgoLabel;
     export let optimAlgoStack: optimAlgoLabel[];
@@ -27,13 +28,6 @@
 </script>
 
 <div class="container">
-    <!-- <div
-        class="text"
-        style:color={fontColor}
-        style:margin={s.buttonMargin.px()}
-    >
-        initialization Algorithm:
-    </div> -->
     <div title="initialization Algorithm">
         <AlgoSelector
             algoOptions={[...initAlgoLabels.values()]}
@@ -42,11 +36,13 @@
         />
     </div>
     {#each memory.steps[0] as step}
-        <LengBar length={step.len} maxLeng={memory.maxLeng} />
+        <LengBar
+            length={step.len}
+            maxLeng={memory.maxLeng}
+            isActive={step.index == $input_store.renderedStep}
+        />
     {/each}
-    <!-- <div style:color={fontColor} style:margin={s.buttonMargin.px()}>
-        optimization Algorithms:
-    </div> -->
+
     {#each optimAlgoStack as optim, i}
         <div title="optimization Algorithm">
             <AlgoSelector
@@ -56,7 +52,11 @@
             />
         </div>
         {#each memory.steps[i + 1] as step}
-            <LengBar length={step.len} maxLeng={memory.maxLeng} />
+            <LengBar
+                length={step.len}
+                maxLeng={memory.maxLeng}
+                isActive={step.index == $input_store.renderedStep}
+            />
         {/each}
     {/each}
 
