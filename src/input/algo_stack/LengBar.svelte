@@ -1,26 +1,22 @@
 <script lang="ts">
     import type { step } from "../../data/memory";
     import * as s from "../../settings";
-    import { input_store } from "../input_store";
+    import { visualStore } from "../input_stores";
 
     export let step: step;
     export let maxLeng: number;
     $: color =
-        step.index == $input_store.renderedStep
+        step.index == $visualStore.renderedStep
             ? s.activeBarColor
             : s.inactiveBarColor;
     $: width = `${(step.len / maxLeng) * 100}%`;
     let button: HTMLButtonElement | undefined;
 
     $: {
-        if (step.index == $input_store.renderedStep) {
+        if (step.index == $visualStore.renderedStep) {
             button?.scrollIntoView({ behavior: "instant", block: "center" });
             // scroll faster
         }
-    }
-
-    function handleClick() {
-        $input_store.renderedStep = step.index;
     }
 </script>
 
@@ -34,12 +30,7 @@
         {(step.len + 0.0001).toString().slice(0, 4)}
     </sub>
 
-    <button
-        style:background-color={color}
-        style:width
-        on:click={handleClick}
-        bind:this={button}
-    />
+    <button style:background-color={color} style:width bind:this={button} />
 </div>
 
 <style>

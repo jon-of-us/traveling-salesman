@@ -1,13 +1,17 @@
 import { writable } from "svelte/store";
 import type { initAlgoLabel, optimAlgoLabel } from "../algos/algo_utils";
 import { initAlgoLabels, optimAlgoLabels } from "../algos/algo_utils";
+import * as s from "../settings";
 
-export const input_store = writable({
-    nPoints: 20,
-    renderedStep: 15,
+export const memoryStore = writable({
+    nPoints: 40,
     initAlgo: initAlgoLabels[0] as initAlgoLabel,
     optimAlgoStack: [
-        // optimAlgoLabels[0],
-        // optimAlgoLabels[1],
+        optimAlgoLabels[0],
+        optimAlgoLabels[1],
     ] as optimAlgoLabel[],
+});
+
+export const visualStore = writable({
+    renderedStep: 15,
 });

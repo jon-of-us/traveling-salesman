@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { Layer } from "svelte-canvas";
-    import type { Edges, nodePair } from "../data/edges";
+    import type { nodePair } from "../data/edges";
     import type { Memory } from "../data/memory";
     import Edge from "./Edge.svelte";
 

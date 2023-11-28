@@ -1,6 +1,6 @@
 <script lang="ts">
     import Input from "./input/Input.svelte";
-    import { input_store } from "./input/input_store";
+    import { memoryStore, visualStore } from "./input/input_stores";
     import Canvas from "./canvas/Canvas.svelte";
     import Nodes from "./visual/Nodes.svelte";
     import Edges from "./visual/Edges.svelte";
@@ -14,11 +14,10 @@
     let memory = new Memory();
     let runs = 0;
     $: {
-        memory.adjustNumberOfNodes($input_store.nPoints);
-        let algos = [$input_store.initAlgo, ...$input_store.optimAlgoStack];
+        memory.adjustNumberOfNodes($memoryStore.nPoints);
+        let algos = [$memoryStore.initAlgo, ...$memoryStore.optimAlgoStack];
         memory.runAlgos(algos);
         memory = memory;
-        runs += 1;
     }
     /**array of all steps which should be rendered.
      * For each step an array of all edges.
@@ -26,11 +25,16 @@
     $: stepsToRender = memory.steps
         .flat()
         .slice(
-            Math.max($input_store.renderedStep - dataTrace, 0),
-            $input_store.renderedStep + 1
+            Math.max($visualStore.renderedStep - dataTrace, 0),
+            $visualStore.renderedStep + 1
         )
         .reverse()
         .map((step) => step.edges.all());
+    $: {
+        $visualStore;
+        $memoryStore;
+        runs += 1;
+    }
 </script>
 
 <div id="app">

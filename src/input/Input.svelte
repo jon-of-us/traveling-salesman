@@ -1,6 +1,6 @@
 <script lang="ts">
     import Slider from "./Slider.svelte";
-    import { input_store } from "./input_store";
+    import { visualStore, memoryStore } from "./input_stores";
     import * as s from "../settings";
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
     import type { Memory } from "../data/memory";
@@ -16,9 +16,8 @@
             virtualScroll,
             (memory.n_steps - 1) / s.scrollSpeed
         );
-        console.log(virtualScroll);
     }
-    $: $input_store.renderedStep = Math.round(virtualScroll * s.scrollSpeed);
+    $: $visualStore.renderedStep = Math.round(virtualScroll * s.scrollSpeed);
 
     function adjustVirtualScroll(e: WheelEvent) {
         virtualScroll += e.deltaY;
@@ -32,14 +31,14 @@
     <div class="stack">
         <AlgoStack
             {memory}
-            bind:initAlgo={$input_store.initAlgo}
-            bind:optimAlgoStack={$input_store.optimAlgoStack}
+            bind:initAlgo={$memoryStore.initAlgo}
+            bind:optimAlgoStack={$memoryStore.optimAlgoStack}
         />
     </div>
     <div class="slider">
         <Slider
             text="Number of Points"
-            bind:value={$input_store.nPoints}
+            bind:value={$memoryStore.nPoints}
             min={s.minPoints}
             max={s.maxPoints}
         />

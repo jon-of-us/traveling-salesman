@@ -3,6 +3,7 @@ import { type algoLabel } from "../algos/algo_utils";
 import { runSteps } from "../algos/algo_utils";
 import { Nodes } from "./nodes";
 import { Edges } from "./edges";
+import * as s from "../settings";
 
 export type step = { edges: Edges; len: number; index: number };
 
@@ -52,9 +53,17 @@ export class Memory {
                 this.n_steps = index;
             };
 
-            pushStep();
+            if (algoLabel == algoLabels[0]) {
+                pushStep();
+            }
             for (let _ of runSteps(changingData, algoLabel)) {
                 pushStep();
+            }
+            if (algoLabel == algoLabels[-1]) {
+                console.log("pushing 20 more steps");
+                for (let i = 0; i < 20; i++) {
+                    pushStep();
+                }
             }
             this.steps.push(stepArr);
         }
