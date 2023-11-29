@@ -4,7 +4,7 @@
     import {
         fontColor,
         buttonMargin,
-        stackHeight,
+        buttonHeight,
         buttonColor,
     } from "../../settings";
     export let text = "";
@@ -14,7 +14,7 @@
     on:click
     style:background-color={buttonColor}
     style:margin={buttonMargin.px()}
-    style:height={stackHeight.px()}
+    style:height={buttonHeight.px()}
     style:color={fontColor}
 >
     {text}

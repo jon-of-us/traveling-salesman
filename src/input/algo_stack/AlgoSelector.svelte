@@ -2,7 +2,7 @@
 
 <script lang="ts">
     import { fontColor } from "../../settings";
-    import { buttonColor, buttonMargin, stackHeight } from "../../settings";
+    import { buttonColor, buttonMargin, buttonHeight } from "../../settings";
 
     export let selectedOption: string;
     export let algoOptions: string[];
@@ -12,7 +12,7 @@
 <select
     style:background-color={buttonColor}
     style:margin={buttonMargin.px()}
-    style:height={stackHeight.px()}
+    style:height={buttonHeight.px()}
     style:color={fontColor}
     id="options"
     bind:value={selectedOption}

@@ -2,7 +2,7 @@
     import {
         fontColor,
         buttonMargin,
-        stackHeight,
+        buttonHeight,
         buttonColor,
         squareButtonSize,
     } from "../../settings";
