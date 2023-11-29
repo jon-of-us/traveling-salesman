@@ -23,6 +23,7 @@ export function* cheapestInsertion(data: Data) {
                 data
             );
             if (minLeng < allMinLeng) {
+                allMinLeng = minLeng;
                 minNode = node;
                 allBestEdge = bestEdgeToInsert;
             }
