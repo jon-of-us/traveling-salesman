@@ -3,7 +3,7 @@
     import type { Memory } from "../data/memory";
     import Edge from "./Edge.svelte";
 
-    type StepToRender = IterableIterator<nodePair>;
+    type StepToRender = nodePair[];
 
     export let stepsToRender: StepToRender[];
     export let memory: Memory;

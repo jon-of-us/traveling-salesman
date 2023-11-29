@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { Memory } from "../data/memory";
-    import type { Nodes } from "../data/nodes";
     import Node from "./Node.svelte";
 
     export let memory: Memory;

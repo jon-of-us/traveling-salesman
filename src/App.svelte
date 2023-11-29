@@ -12,7 +12,8 @@
     let height: number;
 
     let memory = new Memory();
-    let runs = 0;
+    /**assign this variable to trigger a rerender*/
+    let changeToRerender = 0;
     $: {
         memory.adjustNumberOfNodes($memoryStore.nPoints);
         let algos = [$memoryStore.initAlgo, ...$memoryStore.optimAlgoStack];
@@ -29,25 +30,22 @@
             $visualStore.renderedStep + 1
         )
         .reverse()
-        .map((step) => step.edges.all());
+        .map((step) => [...step.edges.all()]);
+    // trigger reactive rerender when stores change
     $: {
         $visualStore;
         $memoryStore;
-        runs += 1;
+        changeToRerender += 1;
     }
 </script>
 
 <div id="app">
     <div id="canvas" bind:clientHeight={height} bind:clientWidth={width}>
         <Canvas bind:width bind:height>
-            <Nodes {memory} />
-            <Edges {memory} {stepsToRender} />
-
-            <Layer
-                render={({ context }) => {
-                    runs;
-                }}
-            />
+            {#key changeToRerender}
+                <Nodes {memory} />
+                <Edges {memory} {stepsToRender} />
+            {/key}
         </Canvas>
     </div>
     <div id="input">

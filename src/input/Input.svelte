@@ -8,23 +8,20 @@
 
     export let memory: Memory;
 
+    /**between 0 (included) and 1 (not included)*/
     let virtualScroll = 0;
     let container: HTMLDivElement;
-    $: {
-        virtualScroll = Math.max(virtualScroll, 0);
-        virtualScroll = Math.min(
-            virtualScroll,
-            (memory.n_steps - 1) / s.scrollSpeed
-        );
-    }
-    $: $visualStore.renderedStep = Math.round(virtualScroll * s.scrollSpeed);
 
     function adjustVirtualScroll(e: WheelEvent) {
-        virtualScroll += e.deltaY;
+        virtualScroll += (e.deltaY / memory.nSteps) * s.scrollSpeed;
+        virtualScroll = Math.max(virtualScroll, 0);
+        virtualScroll = Math.min(virtualScroll, 0.9999);
     }
     onMount(() => {
         container.addEventListener("wheel", adjustVirtualScroll);
     });
+
+    $: $visualStore.renderedStep = Math.floor(memory.nSteps * virtualScroll);
 </script>
 
 <div class="container" style:width={s.inputWidth.px()} bind:this={container}>
