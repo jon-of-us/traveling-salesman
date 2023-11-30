@@ -68,5 +68,6 @@
         border-style: border-box;
         margin: 15px;
         flex: 1;
+        overflow: hidden;
     }
 </style>
