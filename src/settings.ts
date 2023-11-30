@@ -10,7 +10,8 @@ export let fontColor = fontColorTransparent(1);
 
 // visual canvas
 /**how many of the previous data states are shown*/
-export const dataTrace = 3;
+export const dataTrace = 1;
+export const traceFade = 3.5;
 export const radius = 5;
 export const lineWidth = 2;
 

@@ -64,6 +64,7 @@ export class Memory {
                     pushStep();
                 }
             }
+
             this.steps.push(stepArr);
         }
     }
