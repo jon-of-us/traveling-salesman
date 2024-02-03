@@ -7,6 +7,7 @@ export class Nodes {
     nextIdx = 0;
     nodes = new Map<number, pointCoords>();
 
+    /** x and y should be betwenn 0 and 1 */
     add(x: number, y: number): void {
         this.nodes.set(this.nextIdx, [x, y]);
         this.nextIdx++;

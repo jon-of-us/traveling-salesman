@@ -37,10 +37,26 @@
         $memoryStore;
         changeToRerender += 1;
     }
+
+    function handleCanvasClick(event: any) {
+        const rect = event.target.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / width;
+        const y = (event.clientY - rect.top) / height;
+        memory.nodes.add(x, y);
+        changeToRerender += 1;
+        $memoryStore.nPoints = memory.nodes.count();
+    }
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div id="app">
-    <div id="canvas" bind:clientHeight={height} bind:clientWidth={width}>
+    <div
+        id="canvas"
+        bind:clientHeight={height}
+        bind:clientWidth={width}
+        on:click={handleCanvasClick}
+    >
         <Canvas bind:width bind:height>
             {#key changeToRerender}
                 <Nodes {memory} />

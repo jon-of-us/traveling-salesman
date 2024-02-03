@@ -16,7 +16,7 @@ export const radius = 5;
 export const lineWidth = 2;
 
 // input
-export const maxPoints = 50;
+export const maxPoints = 100;
 export const inputWidth = new CssValue(245);
 /** min 4 for next neighbor */
 export const minPoints = 4;

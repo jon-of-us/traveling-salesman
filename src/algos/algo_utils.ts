@@ -24,13 +24,13 @@ export function algoDescription(algoLabel: algoLabel): string {
         case "Random":
             return "Randomly chosen edges, which form a cycle";
         case "2-Opt":
-            return "Select two edges and swap them if it improves the total distance (this removes a crossing)";
+            return "Select two edges and swap them if it improves the total distance (often this removes a crossing)";
         case "Next neighbor":
             return "Select the closest neighbor to the current node";
         case "Cheapest insertion":
-            return "Insert the closest node to the current cycle";
+            return "Start with a random Triangle. Insert the closest node to the current cycle";
         case "Shortest edge":
-            return "Select the shortest edge";
+            return "Start without any edges. Select the shortest edge and add it to the graph, if it is still possible to form a cycle after that. Repeat until all nodes are connected";
     }
 }
 

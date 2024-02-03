@@ -5,7 +5,7 @@ import * as s from "../settings";
 
 export const memoryStore = writable({
     nPoints: 40,
-    initAlgo: initAlgoLabels[0] as initAlgoLabel,
+    initAlgo: initAlgoLabels[1] as initAlgoLabel,
     optimAlgoStack: [
         optimAlgoLabels[0],
         optimAlgoLabels[1],

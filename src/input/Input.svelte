@@ -9,7 +9,7 @@
     export let memory: Memory;
 
     /**between 0 (included) and 1 (not included)*/
-    let virtualScroll = 0;
+    let virtualScroll = 0.999;
     let container: HTMLDivElement;
 
     function adjustVirtualScroll(e: WheelEvent) {
