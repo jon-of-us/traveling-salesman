@@ -1,6 +1,7 @@
 <!-- Dropdown.svelte -->
 
 <script lang="ts">
+    import type { Actions } from "../../App.svelte";
     import { fontColor } from "../../settings";
     import { buttonColor, buttonMargin, buttonHeight } from "../../settings";
 

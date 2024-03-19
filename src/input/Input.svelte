@@ -5,8 +5,10 @@
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
     import type { Memory } from "../data/memory";
     import { onMount } from "svelte";
+    import type { Actions } from "../App.svelte";
 
     export let memory: Memory;
+    export let actions: Actions;
 
     /**between 0 (included) and 1 (not included)*/
     let virtualScroll = 0.999;
@@ -16,12 +18,16 @@
         virtualScroll += (e.deltaY / memory.nSteps) * s.scrollSpeed;
         virtualScroll = Math.max(virtualScroll, 0);
         virtualScroll = Math.min(virtualScroll, 0.9999);
+        actions.updateStepsToRender();
     }
     onMount(() => {
         container.addEventListener("wheel", adjustVirtualScroll);
     });
 
-    $: $visualStore.renderedStep = Math.floor(memory.nSteps * virtualScroll);
+    $: {
+        $visualStore.renderedStep = Math.floor(memory.nSteps * virtualScroll);
+        // actions.render();
+    }
 </script>
 
 <div class="container" style:width={s.inputWidth.px()} bind:this={container}>
@@ -35,7 +41,7 @@
     <div class="slider">
         <Slider
             text="Number of Points"
-            bind:value={$memoryStore.nPoints}
+            value={memory.nodes.count()}
             min={s.minPoints}
             max={s.maxPoints}
         />
