@@ -37,7 +37,7 @@
             text="Number of Points"
             value={memory.nodes.count()}
             min={s.minPoints}
-            max={s.maxPoints}
+            max={s.maxNodes}
             onInput={(n) => actions.adjustNumberOfNodes(n)}
         />
     </div>

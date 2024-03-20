@@ -30,6 +30,7 @@
         type initAlgoLabel,
         type optimAlgoLabel,
     } from "./algos/algo_utils";
+    import * as s from "./settings";
 
     let width: number;
     let height: number;
@@ -37,13 +38,13 @@
     let memory = new Memory();
     const selectedAlgos = new SelectedAlgos();
     let virtualScroll = 0.999;
+
     let renderedStep = 0;
     /**assign this variable to trigger a rerender*/
     let changeToRerender = 0;
     let stepsToRender: nodePair[][];
     let todo = new Todo();
 
-    /*singleton class */
     const actions: Actions = {
         render() {
             const renderFun = () => {
@@ -53,8 +54,10 @@
         },
         addNode(x: number, y: number) {
             const addNodeFun = () => {
+                if (memory.nodes.count() > s.maxNodes) return;
                 memory.nodes.add(x, y);
-                this.render();
+                this.runAlgos();
+                this.updateRenderedStep();
             };
             todo.add("add node", addNodeFun, 2, false);
         },
@@ -159,25 +162,13 @@
     renderedStep = memory.nSteps - 1;
     actions.updateStepsToRender();
     actions.renderSidebar();
-
-    function handleCanvasClick(event: any) {
-        const rect = event.target.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / width;
-        const y = (event.clientY - rect.top) / height;
-        actions.addNode(x, y);
-    }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div id="app">
-    <div
-        id="canvas"
-        bind:clientHeight={height}
-        bind:clientWidth={width}
-        on:click={handleCanvasClick}
-    >
-        <Canvas bind:width bind:height>
+    <div id="canvas" bind:clientHeight={height} bind:clientWidth={width}>
+        <Canvas bind:width bind:height {actions}>
             {#key changeToRerender}
                 <Nodes {memory} />
                 <Edges {memory} {stepsToRender} />

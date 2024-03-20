@@ -9,6 +9,10 @@ export class Nodes {
 
     /** x and y should be betwenn 0 and 1 */
     add(x: number, y: number): void {
+        if ([x, y].some((val) => val < 0 || val > 1))
+            throw new Error(`x and y should be between 0 and 1`);
+        // if ([...this.nodes.values()].some((arr) => arr[0] == x && arr[1] == y))
+        //     return;
         this.nodes.set(this.nextIdx, [x, y]);
         this.nextIdx++;
     }
