@@ -8,7 +8,7 @@ import { Data } from "../data/data";
 export function* cheapestInsertion(data: Data) {
     data.edges.clear();
     let nodeList = [...data.nodes.all()];
-    let [n1, n2, n3] = nodeList.splice(0, 3);
+    let [n1, n2, n3] = nodeList.splice(nodeList.length - 3, 3);
     data.edges.add([n1, n2]);
     data.edges.add([n2, n3]);
     data.edges.add([n1, n3]);

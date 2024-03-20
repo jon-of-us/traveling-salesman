@@ -94,6 +94,7 @@
                     )
                     .reverse()
                     .map((step) => [...step.edges.all()]);
+                this.updateRenderedStep();
                 this.render();
             };
             todo.add(
