@@ -5,12 +5,13 @@
         adjustNumberOfNodes(nNodes: number): void;
         runAlgos(): void;
         updateStepsToRender(): void;
-        rerenderSidebar(): void;
+        renderSidebar(): void;
         changeInitAlgo(label: initAlgoLabel): void;
         changeOptimAlgo(label: optimAlgoLabel, index: number): void;
         addOptimAlgo(): void;
         removeOptimAlgo(): void;
-        setRenderedStep(step: number): void;
+        updateRenderedStep(): void;
+        setVirtualScroll(scroll: number): void;
     }
 </script>
 
@@ -35,6 +36,7 @@
 
     let memory = new Memory();
     const selectedAlgos = new SelectedAlgos();
+    let virtualScroll = 0.999;
     let renderedStep = 0;
     /**assign this variable to trigger a rerender*/
     let changeToRerender = 0;
@@ -60,6 +62,7 @@
             const adjustNumberOfNodesFun = () => {
                 memory.adjustNumberOfNodes(nNodes);
                 this.runAlgos();
+                this.updateRenderedStep();
             };
             todo.add(
                 "adjust number of nodes",
@@ -71,8 +74,8 @@
         runAlgos() {
             const runAlgosFun = () => {
                 memory.runAlgos(selectedAlgos.all());
+                this.renderSidebar();
                 this.updateStepsToRender();
-                this.render();
             };
             todo.add("run algorithms", runAlgosFun, 1);
         },
@@ -94,7 +97,7 @@
                 0.5
             );
         },
-        rerenderSidebar() {
+        renderSidebar() {
             const rerenderSidebarFun = () => {
                 memory = memory;
             };
@@ -118,7 +121,7 @@
             const addOptimAlgoFun = () => {
                 selectedAlgos.optimAlgoStack.push(optimAlgoLabels[0]);
                 this.runAlgos();
-                this.rerenderSidebar();
+                this.renderSidebar();
             };
             todo.add("add optim algo", addOptimAlgoFun, 2.3, false);
         },
@@ -126,24 +129,34 @@
             const removeOptimAlgoFun = () => {
                 selectedAlgos.optimAlgoStack.pop();
                 this.runAlgos();
-                this.rerenderSidebar();
+                this.renderSidebar();
             };
             todo.add("remove optim algo", removeOptimAlgoFun, 2.3, false);
         },
-        setRenderedStep(step: number) {
+        setVirtualScroll(scroll: number) {
+            const setVirtualScrollFun = () => {
+                virtualScroll = scroll;
+                this.updateRenderedStep();
+            };
+            todo.add("set virtual scroll", setVirtualScrollFun, 0.6);
+        },
+        updateRenderedStep() {
             const setRenderedStepFun = () => {
-                renderedStep = step;
-                this.rerenderSidebar();
-                this.updateStepsToRender();
+                const oldRenderedStep = renderedStep;
+                renderedStep = Math.floor(memory.nSteps * virtualScroll);
+                if (oldRenderedStep !== renderedStep) {
+                    this.renderSidebar();
+                    this.updateStepsToRender();
+                }
             };
             todo.add("set rendered step", setRenderedStepFun, 0.6);
         },
     };
 
     actions.adjustNumberOfNodes(30);
-    actions.updateStepsToRender();
     renderedStep = memory.nSteps - 1;
-    actions.render();
+    actions.updateStepsToRender();
+    actions.renderSidebar();
 
     function handleCanvasClick(event: any) {
         const rect = event.target.getBoundingClientRect();

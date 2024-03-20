@@ -6,6 +6,7 @@
     export let step = 1;
     export let initialValue = Infinity;
     export let value: number;
+    export let onInput: (a: number) => void = () => {};
     if (initialValue != Infinity) {
         value = initialValue;
     }
@@ -16,10 +17,15 @@
      * */
     export let text: string | ((a: number) => string) = (value: number) =>
         `${value}`;
+    function handleInput(e: Event) {
+        const target = e.target as HTMLInputElement;
+        value = parseFloat(target.value);
+        onInput(value);
+    }
 </script>
 
 <div class="slidercontainer">
-    <input type="range" {min} {max} {step} bind:value />
+    <input type="range" {min} {max} {step} {value} on:input={handleInput} />
     <span style="--color: {color};"
         >{typeof text == "string" ? `${text}: ${value}` : text(value)}</span
     >

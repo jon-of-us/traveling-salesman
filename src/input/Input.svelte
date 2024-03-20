@@ -17,15 +17,11 @@
     let container: HTMLDivElement;
 
     function handleScroll(e: WheelEvent) {
+        if (Math.abs(e.deltaY) < 0.2) return;
         virtualScroll += (e.deltaY / memory.nSteps) * s.scrollSpeed;
         virtualScroll = Math.max(virtualScroll, 0);
         virtualScroll = Math.min(virtualScroll, 0.9999);
-        const oldRenderedStep = renderedStep;
-        const newRenderedStep = Math.floor(memory.nSteps * virtualScroll);
-        if (oldRenderedStep !== newRenderedStep) {
-            renderedStep = newRenderedStep;
-            actions.setRenderedStep(renderedStep);
-        }
+        actions.setVirtualScroll(virtualScroll);
     }
     onMount(() => {
         container.addEventListener("wheel", handleScroll);
@@ -42,6 +38,7 @@
             value={memory.nodes.count()}
             min={s.minPoints}
             max={s.maxPoints}
+            onInput={(n) => actions.adjustNumberOfNodes(n)}
         />
     </div>
 </div>

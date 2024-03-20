@@ -4,9 +4,7 @@
     import * as s from "../../settings";
     import {
         initAlgoLabels,
-        type initAlgoLabel,
         optimAlgoLabels,
-        type optimAlgoLabel,
         algoDescription,
     } from "../../algos/algo_utils";
     import type { Memory } from "../../data/memory";
