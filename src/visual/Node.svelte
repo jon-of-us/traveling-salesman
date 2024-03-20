@@ -9,7 +9,7 @@
     const render: Render = ({ context, width, height }) => {
         context.fillStyle = "white";
         context.beginPath();
-        context.arc(x * width, y * height, s.nodeRadius, 0, 2 * Math.PI);
+        context.arc(x * width, y * height, s.visualNodeRadius, 0, 2 * Math.PI);
         context.fill();
     };
 </script>

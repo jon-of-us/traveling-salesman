@@ -12,6 +12,7 @@
         removeOptimAlgo(): void;
         updateRenderedStep(): void;
         setVirtualScroll(scroll: number): void;
+        moveNode(node: number, position: [number, number]): void;
     }
 </script>
 
@@ -30,6 +31,7 @@
         type initAlgoLabel,
         type optimAlgoLabel,
     } from "./algos/algo_utils";
+    import { CanvasMouseHandler } from "./canvas/canvas_mouse_handler";
     import * as s from "./settings";
 
     let width: number;
@@ -54,7 +56,7 @@
         },
         addNode(x: number, y: number) {
             const addNodeFun = () => {
-                if (memory.nodes.count() > s.maxNodes) return;
+                if (memory.nodes.count() >= s.maxNodes) return;
                 memory.nodes.add(x, y);
                 this.runAlgos();
                 this.updateRenderedStep();
@@ -156,6 +158,14 @@
             };
             todo.add("set rendered step", setRenderedStepFun, 0.6);
         },
+        moveNode(node: number, position: [number, number]) {
+            const moveNodeFun = () => {
+                memory.nodes.setCoords(node, position);
+                this.runAlgos();
+                this.updateRenderedStep();
+            };
+            todo.add("move node", moveNodeFun, 2.4, false);
+        },
     };
 
     actions.adjustNumberOfNodes(30);
@@ -163,12 +173,7 @@
     actions.updateStepsToRender();
     actions.renderSidebar();
 
-    function handleCanvasClick(event: any) {
-        const rect = event.target.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / width;
-        const y = (event.clientY - rect.top) / height;
-        actions.addNode(x, y);
-    }
+    const canvasMouseHandler = new CanvasMouseHandler(actions, memory);
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -178,7 +183,13 @@
         id="canvas"
         bind:clientHeight={height}
         bind:clientWidth={width}
-        on:click={handleCanvasClick}
+        on:mousedown={(e) =>
+            canvasMouseHandler.handleMousedown(e, width, height)}
+        on:mouseup={() => {
+            console.log("mouseup");
+            canvasMouseHandler.handleMouseup();
+        }}
+        on:mouseleave={() => canvasMouseHandler.handleMouseLeave()}
     >
         <Canvas bind:width bind:height>
             {#key changeToRerender}

@@ -28,7 +28,7 @@ export class Nodes {
         return val;
     }
     /** returns the index of a node in radius, return undefined if no node is found*/
-    getNearNode(coords: pointCoords, radius: number): pointIdx | undefined {
+    findNearNode(coords: pointCoords, radius: number): pointIdx | undefined {
         for (let [idx, val] of this.nodes) {
             const squareDist =
                 (val[0] - coords[0]) ** 2 + (val[1] - coords[1]) ** 2;
