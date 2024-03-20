@@ -18,6 +18,7 @@ export class Todo {
         if (task.isUnique && this.queue.map((x) => x.name).includes(task.name))
             return;
         this.queue.push(task);
+        // requestAnimationFrame(() => this.doAll());
         this.doAll();
     }
     private doNext() {
@@ -27,7 +28,10 @@ export class Todo {
         const maxIndex = priorities.indexOf(maxPriority);
         const task = this.queue[maxIndex];
         this.queue.splice(maxIndex, 1);
-        if (debug) console.log(`Doing task: ${task.name}`);
+        if (debug)
+            console.log(
+                `Doing task: ${task.name} [time = ${performance.now()}]`
+            );
         task.complete();
     }
     private doAll() {

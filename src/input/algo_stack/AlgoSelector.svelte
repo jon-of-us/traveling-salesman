@@ -12,6 +12,7 @@
 
     function handleChange(event: Event) {
         const target = event.target as HTMLSelectElement;
+        console.log(target.value);
         onChange(target.value as algoLabel);
     }
 </script>

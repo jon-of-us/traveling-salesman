@@ -10,13 +10,12 @@
         changeOptimAlgo(label: optimAlgoLabel, index: number): void;
         addOptimAlgo(): void;
         removeOptimAlgo(): void;
-        setRenderdStep(step: number): void;
+        setRenderedStep(step: number): void;
     }
 </script>
 
 <script lang="ts">
     import Input from "./input/Input.svelte";
-    import { memoryStore, visualStore } from "./input/input_stores";
     import Canvas from "./canvas/Canvas.svelte";
     import Nodes from "./visual/Nodes.svelte";
     import Edges from "./visual/Edges.svelte";
@@ -82,8 +81,8 @@
                 stepsToRender = memory.steps
                     .flat()
                     .slice(
-                        Math.max($visualStore.renderedStep - dataTrace, 0),
-                        $visualStore.renderedStep + 1
+                        Math.max(renderedStep - dataTrace, 0),
+                        renderedStep + 1
                     )
                     .reverse()
                     .map((step) => [...step.edges.all()]);
@@ -119,6 +118,7 @@
             const addOptimAlgoFun = () => {
                 selectedAlgos.optimAlgoStack.push(optimAlgoLabels[0]);
                 this.runAlgos();
+                this.rerenderSidebar();
             };
             todo.add("add optim algo", addOptimAlgoFun, 2.3, false);
         },
@@ -126,25 +126,24 @@
             const removeOptimAlgoFun = () => {
                 selectedAlgos.optimAlgoStack.pop();
                 this.runAlgos();
+                this.rerenderSidebar();
             };
             todo.add("remove optim algo", removeOptimAlgoFun, 2.3, false);
         },
-        setRenderdStep(step: number) {
-            const setRenderdStepFun = () => {
+        setRenderedStep(step: number) {
+            const setRenderedStepFun = () => {
                 renderedStep = step;
-                this.render();
+                this.rerenderSidebar();
+                this.updateStepsToRender();
             };
-            todo.add("set rendered step", setRenderdStepFun, 0.6);
+            todo.add("set rendered step", setRenderedStepFun, 0.6);
         },
     };
 
-    $: {
-        $memoryStore;
-        actions.runAlgos();
-    }
-
     actions.adjustNumberOfNodes(30);
     actions.updateStepsToRender();
+    renderedStep = memory.nSteps - 1;
+    actions.render();
 
     function handleCanvasClick(event: any) {
         const rect = event.target.getBoundingClientRect();
@@ -171,7 +170,7 @@
         </Canvas>
     </div>
     <div id="input">
-        <Input {memory} {actions} {selectedAlgos} />
+        <Input {memory} {actions} {selectedAlgos} {renderedStep} />
     </div>
 </div>
 

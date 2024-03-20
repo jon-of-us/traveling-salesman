@@ -1,6 +1,5 @@
 <script lang="ts">
     import Slider from "./Slider.svelte";
-    import { visualStore, memoryStore } from "./input_stores";
     import * as s from "../settings";
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
     import type { Memory } from "../data/memory";
@@ -11,35 +10,31 @@
     export let memory: Memory;
     export let actions: Actions;
     export let selectedAlgos: SelectedAlgos;
+    export let renderedStep: number;
 
     /**between 0 (included) and 1 (not included)*/
     let virtualScroll = 0.999;
     let container: HTMLDivElement;
 
-    function adjustVirtualScroll(e: WheelEvent) {
+    function handleScroll(e: WheelEvent) {
         virtualScroll += (e.deltaY / memory.nSteps) * s.scrollSpeed;
         virtualScroll = Math.max(virtualScroll, 0);
         virtualScroll = Math.min(virtualScroll, 0.9999);
-        actions.updateStepsToRender();
+        const oldRenderedStep = renderedStep;
+        const newRenderedStep = Math.floor(memory.nSteps * virtualScroll);
+        if (oldRenderedStep !== newRenderedStep) {
+            renderedStep = newRenderedStep;
+            actions.setRenderedStep(renderedStep);
+        }
     }
     onMount(() => {
-        container.addEventListener("wheel", adjustVirtualScroll);
+        container.addEventListener("wheel", handleScroll);
     });
-
-    $: {
-        let oldRenderedStep = $visualStore.renderedStep;
-        let newRenderedStep = Math.floor(memory.nSteps * virtualScroll);
-        if (oldRenderedStep !== newRenderedStep) {
-            $visualStore.renderedStep = newRenderedStep;
-            actions.render();
-        }
-        // actions.render();
-    }
 </script>
 
 <div class="container" style:width={s.inputWidth.px()} bind:this={container}>
     <div class="stack">
-        <AlgoStack {memory} {selectedAlgos} {actions} />
+        <AlgoStack {memory} {selectedAlgos} {actions} {renderedStep} />
     </div>
     <div class="slider">
         <Slider
