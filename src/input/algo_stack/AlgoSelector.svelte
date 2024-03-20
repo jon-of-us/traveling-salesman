@@ -1,13 +1,19 @@
 <!-- Dropdown.svelte -->
 
 <script lang="ts">
-    import type { Actions } from "../../App.svelte";
     import { fontColor } from "../../settings";
     import { buttonColor, buttonMargin, buttonHeight } from "../../settings";
 
-    export let selectedOption: string;
-    export let algoOptions: string[];
-    export let algoDescription: (arg0: any) => string;
+    type algoLabel = $$Generic;
+    export let algoOptions: algoLabel[];
+    export let selectedOption: algoLabel;
+    export let algoDescription: (arg0: algoLabel) => string;
+    export let onChange: (arg0: algoLabel) => void;
+
+    function handleChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        onChange(target.value as algoLabel);
+    }
 </script>
 
 <select
@@ -16,7 +22,8 @@
     style:height={buttonHeight.px()}
     style:color={fontColor}
     id="options"
-    bind:value={selectedOption}
+    value={selectedOption}
+    on:change={handleChange}
 >
     {#each algoOptions as option}
         <option value={option} title={algoDescription(option)}>{option}</option>

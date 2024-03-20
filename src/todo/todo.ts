@@ -17,13 +17,11 @@ export class Todo {
         // console.log(this.queue);
         if (task.isUnique && this.queue.map((x) => x.name).includes(task.name))
             return;
-        console.log("added element to queue");
         this.queue.push(task);
         this.doAll();
     }
     private doNext() {
         if (this.queue.length == 0) return;
-        console.log(this.queue.map((x) => x.name));
         const priorities = this.queue.map((x) => x.priority);
         const maxPriority = Math.max(...priorities);
         const maxIndex = priorities.indexOf(maxPriority);

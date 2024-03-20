@@ -6,6 +6,11 @@
         runAlgos(): void;
         updateStepsToRender(): void;
         rerenderSidebar(): void;
+        changeInitAlgo(label: initAlgoLabel): void;
+        changeOptimAlgo(label: optimAlgoLabel, index: number): void;
+        addOptimAlgo(): void;
+        removeOptimAlgo(): void;
+        setRenderdStep(step: number): void;
     }
 </script>
 
@@ -19,13 +24,19 @@
     import { dataTrace } from "./settings";
     import { Todo } from "./todo/todo";
     import type { nodePair } from "./data/edges";
-    import { AlgoStack } from "./algos/algostack";
+    import { SelectedAlgos } from "./algos/selected_algos";
+    import {
+        optimAlgoLabels,
+        type initAlgoLabel,
+        type optimAlgoLabel,
+    } from "./algos/algo_utils";
 
     let width: number;
     let height: number;
 
     let memory = new Memory();
-    let algoStack = new AlgoStack();
+    const selectedAlgos = new SelectedAlgos();
+    let renderedStep = 0;
     /**assign this variable to trigger a rerender*/
     let changeToRerender = 0;
     let stepsToRender: nodePair[][];
@@ -60,7 +71,7 @@
         },
         runAlgos() {
             const runAlgosFun = () => {
-                memory.runAlgos(algoStack.all());
+                memory.runAlgos(selectedAlgos.all());
                 this.updateStepsToRender();
                 this.render();
             };
@@ -90,7 +101,41 @@
             };
             todo.add("render sidebar", rerenderSidebarFun, 0);
         },
-        change,
+        changeInitAlgo(label: initAlgoLabel) {
+            const changeInitAlgoFun = () => {
+                selectedAlgos.initAlgo = label;
+                this.runAlgos();
+            };
+            todo.add("change init algo", changeInitAlgoFun, 2.2, false);
+        },
+        changeOptimAlgo(label: optimAlgoLabel, index: number) {
+            const changeOptimAlgoFun = () => {
+                selectedAlgos.optimAlgoStack[index] = label;
+                this.runAlgos();
+            };
+            todo.add("change optim algo", changeOptimAlgoFun, 2.2, false);
+        },
+        addOptimAlgo() {
+            const addOptimAlgoFun = () => {
+                selectedAlgos.optimAlgoStack.push(optimAlgoLabels[0]);
+                this.runAlgos();
+            };
+            todo.add("add optim algo", addOptimAlgoFun, 2.3, false);
+        },
+        removeOptimAlgo() {
+            const removeOptimAlgoFun = () => {
+                selectedAlgos.optimAlgoStack.pop();
+                this.runAlgos();
+            };
+            todo.add("remove optim algo", removeOptimAlgoFun, 2.3, false);
+        },
+        setRenderdStep(step: number) {
+            const setRenderdStepFun = () => {
+                renderedStep = step;
+                this.render();
+            };
+            todo.add("set rendered step", setRenderdStepFun, 0.6);
+        },
     };
 
     $: {
@@ -100,30 +145,6 @@
 
     actions.adjustNumberOfNodes(30);
     actions.updateStepsToRender();
-
-    // $: {
-    //     memory.adjustNumberOfNodes($memoryStore.nPoints);
-    //     let algos = [$memoryStore.initAlgo, ...$memoryStore.optimAlgoStack];
-    //     memory.runAlgos(algos);
-    //     memory = memory;
-    // }
-    // /**array of all steps which should be rendered.
-    //  * For each step an array of all edges.
-    //  * Latest step is first element in the array*/
-    // $: stepsToRender = memory.steps
-    //     .flat()
-    //     .slice(
-    //         Math.max($visualStore.renderedStep - dataTrace, 0),
-    //         $visualStore.renderedStep + 1
-    //     )
-    //     .reverse()
-    //     .map((step) => [...step.edges.all()]);
-    // // trigger reactive rerender when stores change
-    // $: {
-    //     $visualStore;
-    //     $memoryStore;
-    //     changeToRerender += 1;
-    // }
 
     function handleCanvasClick(event: any) {
         const rect = event.target.getBoundingClientRect();
@@ -150,7 +171,7 @@
         </Canvas>
     </div>
     <div id="input">
-        <Input {memory} {actions} />
+        <Input {memory} {actions} {selectedAlgos} />
     </div>
 </div>
 

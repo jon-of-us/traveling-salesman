@@ -6,9 +6,11 @@
     import type { Memory } from "../data/memory";
     import { onMount } from "svelte";
     import type { Actions } from "../App.svelte";
+    import { SelectedAlgos } from "../algos/selected_algos";
 
     export let memory: Memory;
     export let actions: Actions;
+    export let selectedAlgos: SelectedAlgos;
 
     /**between 0 (included) and 1 (not included)*/
     let virtualScroll = 0.999;
@@ -25,18 +27,19 @@
     });
 
     $: {
-        $visualStore.renderedStep = Math.floor(memory.nSteps * virtualScroll);
+        let oldRenderedStep = $visualStore.renderedStep;
+        let newRenderedStep = Math.floor(memory.nSteps * virtualScroll);
+        if (oldRenderedStep !== newRenderedStep) {
+            $visualStore.renderedStep = newRenderedStep;
+            actions.render();
+        }
         // actions.render();
     }
 </script>
 
 <div class="container" style:width={s.inputWidth.px()} bind:this={container}>
     <div class="stack">
-        <AlgoStack
-            {memory}
-            bind:initAlgo={$memoryStore.initAlgo}
-            bind:optimAlgoStack={$memoryStore.optimAlgoStack}
-        />
+        <AlgoStack {memory} {selectedAlgos} {actions} />
     </div>
     <div class="slider">
         <Slider

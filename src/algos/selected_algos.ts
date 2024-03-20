@@ -1,7 +1,7 @@
-import type { initAlgoLabel, optimAlgoLabel } from "../algos/algo_utils";
-import { initAlgoLabels, optimAlgoLabels } from "../algos/algo_utils";
+import type { initAlgoLabel, optimAlgoLabel } from "./algo_utils";
+import { initAlgoLabels, optimAlgoLabels } from "./algo_utils";
 
-export class AlgoStack {
+export class SelectedAlgos {
     initAlgo = initAlgoLabels[1] as initAlgoLabel;
     optimAlgoStack = [
         optimAlgoLabels[0],
