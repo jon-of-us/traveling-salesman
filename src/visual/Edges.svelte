@@ -13,7 +13,10 @@
 {#each stepsToRender as edgeIterator, index}
     {#each edgeIterator as edge}
         <Edge
-            coords={[memory.nodes.get(edge[0]), memory.nodes.get(edge[1])]}
+            coords={[
+                memory.nodes.getCoords(edge[0]),
+                memory.nodes.getCoords(edge[1]),
+            ]}
             opacity={Math.pow(traceFade, -index)}
         ></Edge>
     {/each}

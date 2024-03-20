@@ -13,8 +13,6 @@ export class Todo {
     private queue: Task[] = [];
     add(name: string, complete: () => void, priority: number, isUnique = true) {
         const task = new Task(name, priority, complete, isUnique);
-        // console.log(task.name, task.priority, task.complete, task.isUnique);
-        // console.log(this.queue);
         if (task.isUnique && this.queue.map((x) => x.name).includes(task.name))
             return;
         this.queue.push(task);

@@ -5,8 +5,8 @@ export class Data {
     constructor(public nodes = new Nodes(), public edges = new Edges()) {}
 
     edgeLength(edge: nodePair): number {
-        const [x1, y1] = this.nodes.get(edge[0]);
-        const [x2, y2] = this.nodes.get(edge[1]);
+        const [x1, y1] = this.nodes.getCoords(edge[0]);
+        const [x2, y2] = this.nodes.getCoords(edge[1]);
         return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
     }
     totalLength(): number {

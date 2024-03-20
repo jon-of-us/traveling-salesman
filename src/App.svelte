@@ -162,13 +162,25 @@
     renderedStep = memory.nSteps - 1;
     actions.updateStepsToRender();
     actions.renderSidebar();
+
+    function handleCanvasClick(event: any) {
+        const rect = event.target.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / width;
+        const y = (event.clientY - rect.top) / height;
+        actions.addNode(x, y);
+    }
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div id="app">
-    <div id="canvas" bind:clientHeight={height} bind:clientWidth={width}>
-        <Canvas bind:width bind:height {actions}>
+    <div
+        id="canvas"
+        bind:clientHeight={height}
+        bind:clientWidth={width}
+        on:click={handleCanvasClick}
+    >
+        <Canvas bind:width bind:height>
             {#key changeToRerender}
                 <Nodes {memory} />
                 <Edges {memory} {stepsToRender} />

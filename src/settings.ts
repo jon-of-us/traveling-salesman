@@ -12,7 +12,7 @@ export let fontColor = fontColorTransparent(1);
 /**how many of the previous data states are shown*/
 export const dataTrace = 1;
 export const traceFade = 3.5;
-export const radius = 5;
+export const nodeRadius = 5;
 export const lineWidth = 2;
 
 // input

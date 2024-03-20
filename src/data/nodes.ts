@@ -7,7 +7,7 @@ export class Nodes {
     nextIdx = 0;
     nodes = new Map<number, pointCoords>();
 
-    /** x and y should be betwenn 0 and 1 */
+    /** x and y should be between 0 and 1 */
     add(x: number, y: number): void {
         if ([x, y].some((val) => val < 0 || val > 1))
             throw new Error(`x and y should be between 0 and 1`);
@@ -20,13 +20,23 @@ export class Nodes {
         if (!this.nodes.has(idx)) throw new Error(`node ${idx} not found`);
         this.nodes.set(idx, coords);
     }
-    get(idx: pointIdx): pointCoords {
+    getCoords(idx: pointIdx): pointCoords {
         let val = this.nodes.get(idx);
         if (val === undefined) {
             throw new Error(`node ${idx} not found`);
         }
         return val;
     }
+    /** returns the index of a node in radius, return undefined if no node is found*/
+    getNearNode(coords: pointCoords, radius: number): pointIdx | undefined {
+        for (let [idx, val] of this.nodes) {
+            const squareDist =
+                (val[0] - coords[0]) ** 2 + (val[1] - coords[1]) ** 2;
+            if (squareDist < radius ** 2) return idx;
+        }
+        return undefined;
+    }
+
     delete(idx: pointIdx): void {
         this.nodes.delete(idx);
     }

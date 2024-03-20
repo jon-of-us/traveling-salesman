@@ -4,17 +4,10 @@
 
     export let width = 0;
     export let height = 0;
-    export let actions: Actions;
-
-    function handleClick(event: MouseEvent) {
-        const x = event.offsetX;
-        const y = event.offsetY;
-        actions.addNode(x / width, y / height);
-    }
 </script>
 
 <div>
-    <Canvas {width} {height} on:mousedown={handleClick}>
+    <Canvas {width} {height}>
         <slot />
     </Canvas>
 </div>

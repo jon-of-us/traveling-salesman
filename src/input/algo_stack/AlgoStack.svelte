@@ -24,7 +24,7 @@
             algoOptions={[...initAlgoLabels]}
             selectedOption={selectedAlgos.initAlgo}
             {algoDescription}
-            onChange={() => actions.changeInitAlgo}
+            onChange={(label) => actions.changeInitAlgo(label)}
         />
     </div>
     {#each memory.steps[0] as step}

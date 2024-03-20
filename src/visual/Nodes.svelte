@@ -6,5 +6,5 @@
 </script>
 
 {#each memory.nodes.all() as point}
-    <Node coords={memory.nodes.get(point)} />
+    <Node coords={memory.nodes.getCoords(point)} />
 {/each}
