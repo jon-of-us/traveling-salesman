@@ -122,6 +122,7 @@
                 selectedAlgos.optimAlgoStack.push(optimAlgoLabels[0]);
                 this.runAlgos();
                 this.renderSidebar();
+                this.updateRenderedStep();
             };
             todo.add("add optim algo", addOptimAlgoFun, 2.3, false);
         },
@@ -130,6 +131,7 @@
                 selectedAlgos.optimAlgoStack.pop();
                 this.runAlgos();
                 this.renderSidebar();
+                this.updateRenderedStep();
             };
             todo.add("remove optim algo", removeOptimAlgoFun, 2.3, false);
         },
