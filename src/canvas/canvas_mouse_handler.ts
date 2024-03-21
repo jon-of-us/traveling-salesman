@@ -36,11 +36,9 @@ export class CanvasMouseHandler {
     }
     stopToDragNode() {
         if (this.moveListenerFunction === undefined) return;
-        console.log("stopToDragNode");
         window.removeEventListener("mousemove", this.moveListenerFunction);
     }
     handleMouseup() {
-        console.log("handleMouseup");
         this.stopToDragNode();
     }
     handleMouseLeave() {

@@ -33,6 +33,7 @@
     } from "./algos/algo_utils";
     import { CanvasMouseHandler } from "./canvas/canvas_mouse_handler";
     import * as s from "./settings";
+    import Infobutton from "./visual/Infobutton.svelte";
 
     let width: number;
     let height: number;
@@ -187,7 +188,6 @@
         on:mousedown={(e) =>
             canvasMouseHandler.handleMousedown(e, width, height)}
         on:mouseup={() => {
-            console.log("mouseup");
             canvasMouseHandler.handleMouseup();
         }}
         on:mouseleave={() => canvasMouseHandler.handleMouseLeave()}
@@ -202,6 +202,7 @@
     <div id="input">
         <Input {memory} {actions} {selectedAlgos} {renderedStep} />
     </div>
+    <Infobutton />
 </div>
 
 <style>
