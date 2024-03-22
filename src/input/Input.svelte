@@ -6,7 +6,6 @@
     import { Main } from "../main";
 
     export let main: Main;
-    export let renderedStep: number;
 
     /**between 0 (included) and 1 (not included)*/
     let container: HTMLDivElement;
@@ -27,7 +26,7 @@
 
 <div class="container" style:width={s.inputWidth.px()} bind:this={container}>
     <div class="stack">
-        <AlgoStack {main} {renderedStep} />
+        <AlgoStack {main} />
     </div>
     <div class="slider">
         <Slider

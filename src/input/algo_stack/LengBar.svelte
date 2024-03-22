@@ -1,16 +1,17 @@
 <script lang="ts">
     import type { step } from "../../data/memory";
+    import type { Main } from "../../main";
     import * as s from "../../settings";
     export let step: step;
     export let maxLeng: number;
-    export let renderedStep: number;
+    export let main: Main;
     $: color =
-        step.index == renderedStep ? s.activeBarColor : s.inactiveBarColor;
+        step.index == main.renderedStep ? s.activeBarColor : s.inactiveBarColor;
     $: width = `${(step.len / maxLeng) * 100}%`;
     let button: HTMLButtonElement | undefined;
 
     $: {
-        if (step.index == renderedStep) {
+        if (step.index == main.renderedStep) {
             button?.scrollIntoView({ behavior: "instant", block: "center" });
             // scroll faster
         }

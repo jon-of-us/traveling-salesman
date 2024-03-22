@@ -10,10 +10,17 @@
 
     import * as s from "./settings";
 
-    const main = new Main();
-
     let width: number;
     let height: number;
+    /** assign to rerender */
+    let renderCanvasKey = 0;
+    /** assign to rerender */
+    let renderInputKey = 0;
+    const main = new Main(
+        () => renderCanvasKey++,
+        () => renderInputKey++
+    );
+
     const canvasMouseHandler = new CanvasMouseHandler(main);
 </script>
 
@@ -32,14 +39,14 @@
         on:mouseleave={() => canvasMouseHandler.handleMouseLeave()}
     >
         <Canvas bind:width bind:height>
-            {#key main.renderCanvasKey}
+            {#key renderCanvasKey}
                 <Nodes {main} />
                 <Edges {main} />
             {/key}
         </Canvas>
     </div>
     <div id="input">
-        {#key main.renderInputKey}
+        {#key renderInputKey}
             <Input {main} />
         {/key}
     </div>

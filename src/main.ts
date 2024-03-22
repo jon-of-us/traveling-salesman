@@ -7,6 +7,7 @@ import {
     type optimAlgoLabel,
 } from "./algos/algo_utils";
 import * as s from "./settings";
+import type { nodePair } from "./data/edges";
 
 export class Main {
     memory = new Memory();
@@ -14,20 +15,21 @@ export class Main {
     virtualScroll = 0.999;
     private todo = new Todo();
 
-    /** assign to rerender */
-    renderCanvasKey = 0;
-    /** assign to rerender */
-    renderInputKey = 0;
-    stepsToRender: ;
+    renderedStep = 0;
+    stepsToRender: nodePair[][] = [];
 
-    constructor() {
+    constructor(
+        public renderCanvasCallback: () => void,
+        public renderInputCallback: () => void
+    ) {
         this.adjustNumberOfNodes(30);
         this.renderInput();
+        this.renderCanvas();
     }
 
-    render() {
+    renderCanvas() {
         const renderFun = () => {
-            this.renderCanvasKey += 1;
+            this.renderCanvasCallback();
         };
         this.todo.add("render", renderFun, 0);
     }
@@ -36,7 +38,7 @@ export class Main {
             if (this.memory.nodes.count() >= s.maxNodes) return;
             this.memory.nodes.add(x, y);
             this.runAlgos();
-            // this.updateRenderedStep();
+            this.updateRenderedStep();
         };
         this.todo.add("add node", addNodeFun, 2, false);
     }
@@ -44,7 +46,7 @@ export class Main {
         const adjustNumberOfNodesFun = () => {
             this.memory.adjustNumberOfNodes(nNodes);
             this.runAlgos();
-            // this.updateRenderedStep();
+            this.updateRenderedStep();
         };
         this.todo.add(
             "adjust number of nodes",
@@ -57,13 +59,13 @@ export class Main {
         const runAlgosFun = () => {
             this.memory.runAlgos(this.selectedAlgos.all());
             this.renderInput();
-            this.render();
+            this.renderCanvas();
         };
         this.todo.add("run algorithms", runAlgosFun, 1);
     }
     renderInput() {
         const rerenderSidebarFun = () => {
-            this.renderInputKey += 1;
+            this.renderInputCallback();
         };
         this.todo.add("render sidebar", rerenderSidebarFun, 0);
     }
@@ -101,7 +103,7 @@ export class Main {
         const setVirtualScrollFun = () => {
             this.virtualScroll = scroll;
             this.renderInput();
-            this.render();
+            this.renderCanvas();
         };
         this.todo.add("set virtual scroll", setVirtualScrollFun, 0.6);
     }
@@ -112,5 +114,36 @@ export class Main {
         };
         this.todo.add("move node", moveNodeFun, 2.4, false);
     }
-
+    updateRenderedStep() {
+        const setRenderedStepFun = () => {
+            const oldRenderedStep = this.renderedStep;
+            this.renderedStep = Math.floor(
+                this.memory.nSteps * this.virtualScroll
+            );
+            if (oldRenderedStep !== this.renderedStep) {
+                this.renderInput();
+                this.updateStepsToRender();
+            }
+        };
+        this.todo.add("set rendered step", setRenderedStepFun, 0.6);
+    }
+    updateStepsToRender() {
+        const updateStepsToRenderFun = () => {
+            this.stepsToRender = this.memory.steps
+                .flat()
+                .slice(
+                    Math.max(this.renderedStep - s.dataTrace, 0),
+                    this.renderedStep + 1
+                )
+                .reverse()
+                .map((step) => [...step.edges.all()]);
+            this.updateRenderedStep();
+            this.renderCanvas();
+        };
+        this.todo.add(
+            "update the steps which are rendered",
+            updateStepsToRenderFun,
+            0.5
+        );
+    }
 }

@@ -7,11 +7,11 @@
         optimAlgoLabels,
         algoDescription,
     } from "../../algos/algo_utils";
-    import LengBar from "./LengBar.svelte";
     import type { Main } from "../../main";
 
+    import LengBar from "./LengBar.svelte";
+
     export let main: Main;
-    export let renderedStep: number;
 </script>
 
 <div class="container">
@@ -24,7 +24,7 @@
         />
     </div>
     {#each main.memory.steps[0] as step}
-        <LengBar {step} maxLeng={main.memory.maxLeng} {renderedStep} />
+        <LengBar {step} maxLeng={main.memory.maxLeng} {main} />
     {/each}
 
     {#each main.selectedAlgos.optimAlgoStack as optim, i}
@@ -37,7 +37,7 @@
             />
         </div>
         {#each main.memory.steps[i + 1] as step}
-            <LengBar {step} maxLeng={main.memory.maxLeng} {renderedStep} />
+            <LengBar {step} maxLeng={main.memory.maxLeng} {main} />
         {/each}
     {/each}
 
