@@ -13,7 +13,7 @@ export class Main {
     memory = new Memory();
     selectedAlgos = new SelectedAlgos();
     virtualScroll = 0.999;
-    private todo = new Todo();
+    todo = new Todo();
 
     renderedStep = 0;
     stepsToRender: nodePair[][] = [];
@@ -25,8 +25,8 @@ export class Main {
         this.adjustNumberOfNodes(30);
         this.renderInput();
         this.renderCanvas();
+        this.todo.doAll();
     }
-
     renderCanvas() {
         const renderFun = () => {
             this.renderCanvasCallback();
@@ -104,8 +104,6 @@ export class Main {
     setVirtualScroll(scroll: number) {
         const setVirtualScrollFun = () => {
             this.virtualScroll = scroll;
-            this.renderInput();
-            this.renderCanvas();
             this.updateRenderedStep();
         };
         this.todo.add("set virtual scroll", setVirtualScrollFun, 0.6);
@@ -140,7 +138,6 @@ export class Main {
                 )
                 .reverse()
                 .map((step) => [...step.edges.all()]);
-            this.updateRenderedStep();
             this.renderCanvas();
         };
         this.todo.add(

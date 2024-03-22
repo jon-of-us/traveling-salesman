@@ -9,6 +9,7 @@
     import { Main } from "./main";
 
     import * as s from "./settings";
+    import { onMount } from "svelte";
 
     let width: number;
     let height: number;
