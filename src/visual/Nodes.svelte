@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { Memory } from "../data/memory";
+    import type { Main } from "../main";
     import Node from "./Node.svelte";
 
-    export let memory: Memory;
+    export let main: Main;
 </script>
 
-{#each memory.nodes.all() as point}
-    <Node coords={memory.nodes.getCoords(point)} />
+{#each main.memory.nodes.all() as point}
+    <Node coords={main.memory.nodes.getCoords(point)} />
 {/each}

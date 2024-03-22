@@ -1,24 +1,24 @@
-import { Memory } from "../data/memory";
-import type { Actions } from "../App.svelte";
 import * as s from "../settings";
+import type { Main } from "../main";
 
 export class CanvasMouseHandler {
     moveListenerFunction = undefined as any;
-    constructor(private actions: Actions, private memory: Memory) {}
+    constructor(private main: Main) {}
     handleMousedown(event: any, width: number, height: number) {
         const rect = event.target.getBoundingClientRect();
         const x = (event.clientX - rect.left) / width;
         const y = (event.clientY - rect.top) / height;
-        let nearNodeIdx = this.memory.nodes.findNearNode(
+        let nearNodeIdx = this.main.memory.nodes.findNearNode(
             [x, y],
             s.clickNodeRadius / Math.max(width, height)
         );
         if (nearNodeIdx === undefined) {
-            this.actions.addNode(x, y);
-            nearNodeIdx = this.memory.nodes.findNearNode(
+            this.main.addNode(x, y);
+            nearNodeIdx = this.main.memory.nodes.findNearNode(
                 [x, y],
                 s.clickNodeRadius / Math.max(width, height)
             );
+            if (nearNodeIdx === undefined) return;
         }
         this.startToDragNode(nearNodeIdx!, width, height);
     }
@@ -30,7 +30,7 @@ export class CanvasMouseHandler {
             const rect = event.target.getBoundingClientRect();
             const x = (event.clientX - rect.left) / width;
             const y = (event.clientY - rect.top) / height;
-            this.actions.moveNode(nodeIdx, [x, y]);
+            this.main.moveNode(nodeIdx, [x, y]);
         };
         window.addEventListener("mousemove", this.moveListenerFunction);
     }

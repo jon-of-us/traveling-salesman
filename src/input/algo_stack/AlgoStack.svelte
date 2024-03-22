@@ -7,14 +7,10 @@
         optimAlgoLabels,
         algoDescription,
     } from "../../algos/algo_utils";
-    import type { Memory } from "../../data/memory";
     import LengBar from "./LengBar.svelte";
-    import type { Actions } from "../../App.svelte";
-    import type { SelectedAlgos } from "../../algos/selected_algos";
+    import type { Main } from "../../main";
 
-    export let selectedAlgos: SelectedAlgos;
-    export let memory: Memory;
-    export let actions: Actions;
+    export let main: Main;
     export let renderedStep: number;
 </script>
 
@@ -22,39 +18,36 @@
     <div title="initialization Algorithm">
         <AlgoSelector
             algoOptions={[...initAlgoLabels]}
-            selectedOption={selectedAlgos.initAlgo}
+            selectedOption={main.selectedAlgos.initAlgo}
             {algoDescription}
-            onChange={(label) => actions.changeInitAlgo(label)}
+            onChange={(label) => main.changeInitAlgo(label)}
         />
     </div>
-    {#each memory.steps[0] as step}
-        <LengBar {step} maxLeng={memory.maxLeng} {renderedStep} />
+    {#each main.memory.steps[0] as step}
+        <LengBar {step} maxLeng={main.memory.maxLeng} {renderedStep} />
     {/each}
 
-    {#each selectedAlgos.optimAlgoStack as optim, i}
+    {#each main.selectedAlgos.optimAlgoStack as optim, i}
         <div title="optimization Algorithm">
             <AlgoSelector
                 algoOptions={[...optimAlgoLabels]}
                 selectedOption={optim}
                 {algoDescription}
-                onChange={(label) => actions.changeOptimAlgo(label, i)}
+                onChange={(label) => main.changeOptimAlgo(label, i)}
             />
         </div>
-        {#each memory.steps[i + 1] as step}
-            <LengBar {step} maxLeng={memory.maxLeng} {renderedStep} />
+        {#each main.memory.steps[i + 1] as step}
+            <LengBar {step} maxLeng={main.memory.maxLeng} {renderedStep} />
         {/each}
     {/each}
 
-    {#if selectedAlgos.optimAlgoStack.length + 1 <= s.maxStackLen}
-        <AlgoButton
-            text="add algorithm"
-            on:click={() => actions.addOptimAlgo()}
-        />
+    {#if main.selectedAlgos.optimAlgoStack.length + 1 <= s.maxStackLen}
+        <AlgoButton text="add algorithm" on:click={() => main.addOptimAlgo()} />
     {/if}
-    {#if selectedAlgos.optimAlgoStack.length > 0}
+    {#if main.selectedAlgos.optimAlgoStack.length > 0}
         <AlgoButton
             text="remove algorithm"
-            on:click={() => actions.removeOptimAlgo()}
+            on:click={() => main.removeOptimAlgo()}
         />
     {/if}
 </div>

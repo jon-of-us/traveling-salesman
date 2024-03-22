@@ -1,21 +1,18 @@
 <script lang="ts">
-    import type { nodePair } from "../data/edges";
-    import type { Memory } from "../data/memory";
+    import type { Main } from "../main";
     import { traceFade } from "../settings";
     import Edge from "./Edge.svelte";
+    import * as s from "../settings";
 
-    type StepToRender = nodePair[];
-
-    export let stepsToRender: StepToRender[];
-    export let memory: Memory;
+    export let main: Main;
 </script>
 
-{#each stepsToRender as edgeIterator, index}
+{#each main.stepsToRender as edgeIterator, index}
     {#each edgeIterator as edge}
         <Edge
             coords={[
-                memory.nodes.getCoords(edge[0]),
-                memory.nodes.getCoords(edge[1]),
+                main.memory.nodes.getCoords(edge[0]),
+                main.memory.nodes.getCoords(edge[1]),
             ]}
             opacity={Math.pow(traceFade, -index)}
         ></Edge>

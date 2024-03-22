@@ -2,26 +2,23 @@
     import Slider from "./Slider.svelte";
     import * as s from "../settings";
     import AlgoStack from "./algo_stack/AlgoStack.svelte";
-    import type { Memory } from "../data/memory";
     import { onMount } from "svelte";
-    import type { Actions } from "../App.svelte";
-    import { SelectedAlgos } from "../algos/selected_algos";
+    import { Main } from "../main";
 
-    export let memory: Memory;
-    export let actions: Actions;
-    export let selectedAlgos: SelectedAlgos;
+    export let main: Main;
     export let renderedStep: number;
 
     /**between 0 (included) and 1 (not included)*/
-    let virtualScroll = 0.999;
     let container: HTMLDivElement;
 
     function handleScroll(e: WheelEvent) {
         if (Math.abs(e.deltaY) < 0.2) return;
-        virtualScroll += (e.deltaY / memory.nSteps) * s.scrollSpeed;
-        virtualScroll = Math.max(virtualScroll, 0);
-        virtualScroll = Math.min(virtualScroll, 0.9999);
-        actions.setVirtualScroll(virtualScroll);
+        let newVirtualScroll =
+            main.virtualScroll +
+            (e.deltaY / main.memory.nSteps) * s.scrollSpeed;
+        newVirtualScroll = Math.max(newVirtualScroll, 0);
+        newVirtualScroll = Math.min(newVirtualScroll, 0.9999);
+        main.setVirtualScroll(newVirtualScroll);
     }
     onMount(() => {
         container.addEventListener("wheel", handleScroll);
@@ -30,15 +27,15 @@
 
 <div class="container" style:width={s.inputWidth.px()} bind:this={container}>
     <div class="stack">
-        <AlgoStack {memory} {selectedAlgos} {actions} {renderedStep} />
+        <AlgoStack {main} {renderedStep} />
     </div>
     <div class="slider">
         <Slider
             text="Number of Points"
-            value={memory.nodes.count()}
+            value={main.memory.nodes.count()}
             min={s.minPoints}
             max={s.maxNodes}
-            onInput={(n) => actions.adjustNumberOfNodes(n)}
+            onInput={(n) => main.adjustNumberOfNodes(n)}
         />
     </div>
 </div>
