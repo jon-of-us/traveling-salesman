@@ -59,7 +59,8 @@ export class Main {
         const runAlgosFun = () => {
             this.memory.runAlgos(this.selectedAlgos.all());
             this.renderInput();
-            this.renderCanvas();
+            this.updateStepsToRender();
+            this.updateRenderedStep();
         };
         this.todo.add("run algorithms", runAlgosFun, 1);
     }
@@ -88,6 +89,7 @@ export class Main {
             this.selectedAlgos.optimAlgoStack.push(optimAlgoLabels[0]);
             this.runAlgos();
             this.renderInput();
+            this.updateRenderedStep();
         };
         this.todo.add("add optim algo", addOptimAlgoFun, 2.3, false);
     }
@@ -104,6 +106,7 @@ export class Main {
             this.virtualScroll = scroll;
             this.renderInput();
             this.renderCanvas();
+            this.updateRenderedStep();
         };
         this.todo.add("set virtual scroll", setVirtualScrollFun, 0.6);
     }

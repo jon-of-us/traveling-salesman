@@ -35,4 +35,4 @@ export const maxStackLen = 5;
 export const scrollSpeed = 0.05;
 
 //development
-export const debug = true;
+export const debug = false;
