@@ -7,7 +7,7 @@
     export let main: Main;
     $: color =
         step.index == main.renderedStep ? s.activeBarColor : s.inactiveBarColor;
-    $: width = `${(step.len / maxLeng) * 100}%`;
+    $: width = `${(step.len / maxLeng) * 80}%`;
     let button: HTMLButtonElement | undefined;
 
     $: {
