@@ -3,12 +3,14 @@ import { twoOpt } from "./two-opt";
 import { nextNeighbor } from "./next_neighbor";
 import { cheapestInsertion } from "./cheapest_insertion";
 import { shortestEdge } from "./greedy";
+import { minimumSpanningTree } from "./mst";
 import type { Data } from "../data/data";
 
 export const initAlgoLabels = [
     "Random",
     "Shortest edge",
     "Cheapest insertion",
+    "Minimum spanning tree",
 ] as const;
 export type initAlgoLabel = (typeof initAlgoLabels)[number];
 
@@ -31,6 +33,8 @@ export function algoDescription(algoLabel: algoLabel): string {
             return "Start with a random Triangle. Insert the closest node to the current cycle";
         case "Shortest edge":
             return "Start without any edges. Select the shortest edge and add it to the graph, if it is still possible to form a cycle after that. Repeat until all nodes are connected";
+        case "Minimum spanning tree":
+            return "Build a minimum spanning tree using Prim's algorithm, then convert it to a tour via DFS preorder traversal. Provides a 2-approximation for TSP";
     }
 }
 
@@ -46,6 +50,8 @@ export function algoFunction(algoLabel: algoLabel): algorithm {
             return cheapestInsertion;
         case "Shortest edge":
             return shortestEdge;
+        case "Minimum spanning tree":
+            return minimumSpanningTree;
     }
 }
 

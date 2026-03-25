@@ -22,9 +22,7 @@
     import Nodes from "./visual/Nodes.svelte";
     import Edges from "./visual/Edges.svelte";
     import { Memory } from "./data/memory";
-    import { dataTrace } from "./settings";
     import { Todo } from "./todo/todo";
-    import type { nodePair } from "./data/edges";
     import { SelectedAlgos } from "./algos/selected_algos";
     import {
         optimAlgoLabels,
@@ -45,7 +43,6 @@
     let renderedStep = 0;
     /**assign this variable to trigger a rerender*/
     let changeToRerender = 0;
-    let stepsToRender: nodePair[][];
     let todo = new Todo();
 
     const actions: Actions = {
@@ -87,14 +84,6 @@
         },
         updateStepsToRender() {
             const updateStepsToRenderFun = () => {
-                stepsToRender = memory.steps
-                    .flat()
-                    .slice(
-                        Math.max(renderedStep - dataTrace, 0),
-                        renderedStep + 1
-                    )
-                    .reverse()
-                    .map((step) => [...step.edges.all()]);
                 this.updateRenderedStep();
                 this.render();
             };
@@ -195,7 +184,7 @@
         <Canvas bind:width bind:height>
             {#key changeToRerender}
                 <Nodes {memory} />
-                <Edges {memory} {stepsToRender} />
+                <Edges {memory} {renderedStep} />
             {/key}
         </Canvas>
     </div>
