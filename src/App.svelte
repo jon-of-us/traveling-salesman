@@ -13,6 +13,7 @@
         updateRenderedStep(): void;
         setVirtualScroll(scroll: number): void;
         moveNode(node: number, position: [number, number]): void;
+        selectStep(stepIndex: number): void;
     }
 </script>
 
@@ -32,9 +33,12 @@
     import { CanvasMouseHandler } from "./canvas/canvas_mouse_handler";
     import * as s from "./settings";
     import Infobutton from "./visual/Infobutton.svelte";
+    import { onMount } from "svelte";
 
     let width: number;
     let height: number;
+    let inputElement: HTMLDivElement;
+    let showCanvas = false;
 
     let memory = new Memory();
     const selectedAlgos = new SelectedAlgos();
@@ -71,7 +75,7 @@
                 "adjust number of nodes",
                 adjustNumberOfNodesFun,
                 2.1,
-                false
+                false,
             );
         },
         runAlgos() {
@@ -90,7 +94,7 @@
             todo.add(
                 "update the steps which are rendered",
                 updateStepsToRenderFun,
-                0.5
+                0.5,
             );
         },
         renderSidebar() {
@@ -157,6 +161,13 @@
             };
             todo.add("move node", moveNodeFun, 2.4, false);
         },
+        selectStep(stepIndex: number) {
+            const selectStepFun = () => {
+                virtualScroll = stepIndex / memory.nSteps;
+                this.updateRenderedStep();
+            };
+            todo.add("select step", selectStepFun, 0.6);
+        },
     };
 
     actions.adjustNumberOfNodes(30);
@@ -165,6 +176,29 @@
     actions.renderSidebar();
 
     const canvasMouseHandler = new CanvasMouseHandler(actions, memory);
+
+    onMount(() => {
+        const triggerResize = () => window.dispatchEvent(new Event("resize"));
+
+        // Trigger once immediately and once on the next frame after layout settles.
+        triggerResize();
+        requestAnimationFrame(triggerResize);
+
+        const resizeObserver = new ResizeObserver(() => {
+            triggerResize();
+        });
+        resizeObserver.observe(inputElement);
+
+        // Mount canvas after initial layout so width/height bindings use final sidebar size.
+        requestAnimationFrame(() => {
+            showCanvas = true;
+            requestAnimationFrame(triggerResize);
+        });
+
+        return () => {
+            resizeObserver.disconnect();
+        };
+    });
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -181,14 +215,16 @@
         }}
         on:mouseleave={() => canvasMouseHandler.handleMouseLeave()}
     >
-        <Canvas bind:width bind:height>
-            {#key changeToRerender}
-                <Nodes {memory} />
-                <Edges {memory} {renderedStep} />
-            {/key}
-        </Canvas>
+        {#if showCanvas}
+            <Canvas bind:width bind:height>
+                {#key changeToRerender}
+                    <Nodes {memory} />
+                    <Edges {memory} {renderedStep} />
+                {/key}
+            </Canvas>
+        {/if}
     </div>
-    <div id="input">
+    <div id="input" bind:this={inputElement}>
         <Input {memory} {actions} {selectedAlgos} {renderedStep} />
     </div>
     <Infobutton />
@@ -210,5 +246,11 @@
         margin: 15px;
         flex: 1;
         overflow: hidden;
+        min-width: 0;
+    }
+    #input {
+        width: 245px;
+        flex-shrink: 0;
+        overflow-y: auto;
     }
 </style>

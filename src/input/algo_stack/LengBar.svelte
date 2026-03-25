@@ -27,7 +27,12 @@
         {(step.len + 0.0001).toString().slice(0, 4)}
     </sub>
 
-    <button style:background-color={color} style:width bind:this={button} />
+    <button
+        style:background-color={color}
+        style:width
+        bind:this={button}
+        on:click
+    />
 </div>
 
 <style>

@@ -11,9 +11,3 @@
         <slot />
     </Canvas>
 </div>
-
-<style>
-    div {
-        z-index: -1;
-    }
-</style>

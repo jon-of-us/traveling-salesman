@@ -28,7 +28,7 @@
         />
     </div>
     {#each memory.steps[0] as step}
-        <LengBar {step} maxLeng={memory.maxLeng} {renderedStep} />
+        <LengBar {step} maxLeng={memory.maxLeng} {renderedStep} on:click={() => actions.selectStep(step.index)} />
     {/each}
 
     {#each selectedAlgos.optimAlgoStack as optim, i}
@@ -41,7 +41,7 @@
             />
         </div>
         {#each memory.steps[i + 1] as step}
-            <LengBar {step} maxLeng={memory.maxLeng} {renderedStep} />
+            <LengBar {step} maxLeng={memory.maxLeng} {renderedStep} on:click={() => actions.selectStep(step.index)} />
         {/each}
     {/each}
 
